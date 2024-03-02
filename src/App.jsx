@@ -6,7 +6,7 @@ import { AuthProvider } from "./shared/AuthProvider";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/science-magazine/">
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
