@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const currentUser = true;
-  const role = 0;
+  const role = 1;
 
   return (
     <AuthContext.Provider value={{ currentUser, role }}>
