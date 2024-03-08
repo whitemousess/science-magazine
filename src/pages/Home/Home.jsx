@@ -1,7 +1,21 @@
-import Articles from "~/components/Articles";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import ListArticles from "~/components/ListArticles";
 import Footer from "~/components/Footer";
+import routes from "~/config/routes";
 
 function Home() {
+  const [dataArticles, setDataArticles] = useState([]);
+
+  useEffect(() => {
+    setDataArticles([
+      { _id: 1, imageUrl: "", imageStatus: "", status: "" },
+      { _id: 2, imageUrl: "", imageStatus: "", status: "" },
+      { _id: 3, imageUrl: "", imageStatus: "", status: "" },
+      { _id: 4, imageUrl: "", imageStatus: "", status: "" },
+    ]);
+  }, []);
+
   return (
     <>
       <div className="py-10 md:px-32 px-10 md:flex items-center w-full border-b bg-gradient-to-br to-primary from-green-100">
@@ -27,24 +41,27 @@ function Home() {
         </div>
         <div className="w-full flex flex-col xl:flex-row xl:w-1/2 ">
           <div className="px-4 w-full flex flex-col items-center xl:w-1/2 py-4">
-            <div className="w-full md:w-1/2 h-[300px] bg-primary xl:w-[200px] xl:h-[200px] "></div>
+            <Link
+              to={"/articles/1234"}
+              className="w-full md:w-1/2 h-[300px] bg-primary xl:w-[200px] xl:h-[200px]"
+            ></Link>
             <p className="text-center my-2">Title</p>
             <p className="font-medium text-center">Description</p>
           </div>
           <div className="px-4 w-full flex flex-col items-center xl:w-1/2 py-4">
-            <div className="w-full md:w-1/2 h-[300px] bg-primary xl:w-[200px] xl:h-[200px] "></div>
+            <Link
+              to={"/articles/1234"}
+              className="w-full md:w-1/2 h-[300px] bg-primary xl:w-[200px] xl:h-[200px] "
+            ></Link>
             <p className="text-center my-2">Title</p>
             <p className="font-medium text-center">Description</p>
           </div>
         </div>
       </div>
 
-      <div className="md:px-32 px-4 ">
-        <div className="font-bold mt-4">Bài viết</div>
-        <div className="md:px-32 py-10">
-          <Articles />
-        </div>
-      </div>
+      <ListArticles data={dataArticles} />
+
+      <Link to={routes.articles}>Xem thêm</Link>
 
       <Footer />
     </>

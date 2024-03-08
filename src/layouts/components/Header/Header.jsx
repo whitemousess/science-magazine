@@ -4,14 +4,29 @@ import { FaHome } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 
 import Menu from "./Menu";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Header() {
   const { currentUser, role } = useContext(AuthContext);
+  const [scroll, setScroll] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY >= 500) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
+    });
+  }, []);
 
   return (
-    <div className="py-4 w-full flex justify-around items-center">
+    <div
+      className={`py-4 w-full flex justify-around items-center bg-white ${
+        scroll && "fixed"
+      }`}
+    >
       <Link to={routes.home} className="p-2 md:block hidden">
         <FaHome size={30} />
       </Link>

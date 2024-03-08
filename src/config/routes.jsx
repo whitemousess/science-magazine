@@ -3,8 +3,11 @@
 const routes = {
   home: "/",
   profile: "/profile",
+  editProfile: "/profile/edit",
   favorites: "/favorites",
-  myArticles: "/my-articles",
+  articles: "/articles",
+  detailArticles: "/articles/:id",
+  newArticle: "/articles/new",
 
   login: "/login",
   register: "/register",

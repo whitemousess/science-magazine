@@ -1,10 +1,10 @@
+import { CiLogout } from "react-icons/ci";
 import { useContext, useState } from "react";
-import { FaBook, FaHeart, FaUserCircle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaBook, FaHeart, FaPencilRuler, FaUserCircle } from "react-icons/fa";
 
 import ListItem from "./ListItem";
 import routes from "~/config/routes";
-import { CiLogout } from "react-icons/ci";
-import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Menu() {
@@ -25,11 +25,11 @@ function Menu() {
       icon: <FaHeart size={18} className="mr-4 text-rose-500" />,
     },
     {
-      title: "Bài viết của tôi",
+      title: "Thêm bài viết",
       link: () => {
-        navigate(routes.myArticles);
+        navigate(routes.newArticle);
       },
-      icon: <FaBook size={18} className="mr-4 text-sky-500" />,
+      icon: <FaPencilRuler size={18} className="mr-4 text-amber-700" />,
     },
     {
       title: "Đăng xuất",
@@ -46,7 +46,9 @@ function Menu() {
   return (
     <div className="relative">
       {role === 1 ? (
-        <FaUserCircle size={32} onClick={() => setIsOpen(!isOpen)} />
+        <div className="cursor-pointer">
+          <FaUserCircle size={32} onClick={() => setIsOpen(!isOpen)} />
+        </div>
       ) : (
         <div className="flex justify-center items-center">
           <Link
@@ -63,7 +65,7 @@ function Menu() {
         </div>
       )}
       {isOpen && (
-        <div className="absolute w-[160px] right-0 border rounded-md bg-white z-10">
+        <div className="absolute mt-3 w-[160px] right-0 border rounded-md bg-white z-10 select-none">
           {MENU_STUDENT.map((data) => (
             <ListItem key={data.title} data={data} />
           ))}
