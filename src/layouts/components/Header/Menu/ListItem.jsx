@@ -4,7 +4,7 @@ function ListItem({ data }) {
   return (
     <button
       onClick={data.link}
-      className="w-full flex items-center px-2 py-2 text-sm cursor-pointer hover:bg-slate-200"
+      className="w-full flex items-center px-3 py-3 text-sm cursor-pointer hover:bg-slate-200"
     >
       {data.icon}
       {data.title}

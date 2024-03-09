@@ -1,13 +1,14 @@
 import { CiLogout } from "react-icons/ci";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaBook, FaHeart, FaPencilRuler, FaUserCircle } from "react-icons/fa";
+import { FaHeart, FaPencilRuler, FaUserCircle } from "react-icons/fa";
 
 import ListItem from "./ListItem";
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Menu() {
+  const { logOut, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const MENU_STUDENT = [
     {
@@ -33,21 +34,31 @@ function Menu() {
     },
     {
       title: "Đăng xuất",
-      link: () => {
-        alert("logOut");
-      },
+      link: logOut,
       icon: <CiLogout size={18} className="mr-4" />,
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
   const { role } = useContext(AuthContext);
 
   return (
     <div className="relative">
       {role === 1 ? (
-        <div className="cursor-pointer">
-          <FaUserCircle size={32} onClick={() => setIsOpen(!isOpen)} />
+        <div className="cursor-pointer group">
+          {!currentUser.imageUrl ? (
+            <FaUserCircle size={50} className="p-2" />
+          ) : (
+            <img
+              src={currentUser.imageUrl}
+              alt="avatar"
+              className="w-[42px] h-[42px] rounded-full"
+            />
+          )}
+          <div className="absolute hidden group-hover:block w-[170px] right-0 border rounded-md bg-white z-10 select-none group">
+            {MENU_STUDENT.map((data) => (
+              <ListItem key={data.title} data={data} />
+            ))}
+          </div>
         </div>
       ) : (
         <div className="flex justify-center items-center">
@@ -60,15 +71,8 @@ function Menu() {
           <CiLogout
             size={30}
             className="cursor-pointer mx-4"
-            onClick={() => alert("logOut")}
+            onClick={logOut}
           />
-        </div>
-      )}
-      {isOpen && (
-        <div className="absolute mt-3 w-[160px] right-0 border rounded-md bg-white z-10 select-none">
-          {MENU_STUDENT.map((data) => (
-            <ListItem key={data.title} data={data} />
-          ))}
         </div>
       )}
     </div>

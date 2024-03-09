@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function EditProfile() {
+  const { currentUser, token, editProfile } = useContext(AuthContext);
   const [data, setData] = useState({
-    username: "",
     password: "",
     rePassword: "",
     fullName: "",
     email: "",
     gender: 0,
-    role: 1,
+    imageUrl: "",
   });
   const [image, setImage] = useState("");
 
@@ -16,75 +17,85 @@ function EditProfile() {
     const newData = { ...data };
     newData[e.target.name] = e.target.value;
     setData(newData);
-  };
-
-  const onChangeImage = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const img = URL.createObjectURL(e.target.files[0]);
-      setImage(img);
+    const file = e.target.files;
+    if (file && file[0].type.startsWith("image/")) {
+      const img = {
+        preview: URL.createObjectURL(e.target.files[0]),
+        data: e.target.files[0],
+      };
+      setImage(img.preview);
+      setData({ ...data, imageUrl: img.data });
     }
   };
 
-  console.log(data);
+  useEffect(() => {
+    if (token) {
+      setData({
+        id: currentUser._id,
+        password: "",
+        rePassword: "",
+        fullName: currentUser.fullName,
+        email: currentUser.email,
+        gender: currentUser.gender,
+        imageUrl: currentUser.imageUrl,
+      });
+      setImage(currentUser.imageUrl);
+    }
+  }, [currentUser, token]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    editProfile(data);
+  };
 
   return (
-    <form className="w-3/4 mx-auto mt-10">
-      <div className="relative z-0 w-full mb-5 group">
-        <input
-          type="text"
-          name="Username"
-          id="Username"
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-          required
-        />
-        <label
-          htmlFor="Username"
-          className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
-          Username
-        </label>
-      </div>
+    <form onSubmit={onSubmit} className="w-3/4 mx-auto mt-10">
+      {image && (
+        <img src={image} alt="" className="rounded-lg w-auto h-[200px] mb-4" />
+      )}
       <div className="grid md:grid-cols-2 md:gap-6">
-        <div className="relative z-0 w-full mb-5 group">
+        <div className="relative z-0 w-full mb-5 ">
           <input
             type="password"
-            name="floating_first_name"
-            id="floating_first_name"
+            name="password"
+            id="password"
+            value={data.password}
+            onChange={onChange}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
-            required
           />
           <label
-            htmlFor="floating_first_name"
+            htmlFor="password"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Password
           </label>
         </div>
-        <div className="relative z-0 w-full mb-5 group">
+        <div className="relative z-0 w-full mb-5 ">
           <input
             type="password"
-            name="floating_last_name"
-            id="floating_last_name"
+            name="rePassword"
+            id="rePassword"
+            value={data.rePassword}
+            onChange={onChange}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
-            required
           />
           <label
-            htmlFor="floating_last_name"
+            htmlFor="rePassword"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Re password
           </label>
         </div>
       </div>
-      <div className="relative z-0 w-full mb-5 group">
+      <div className="relative z-0 w-full mb-5 ">
         <input
           type="text"
           name="fullName"
           id="fullName"
+          value={data.fullName}
+          onChange={onChange}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
@@ -121,17 +132,19 @@ function EditProfile() {
           <span className="ml-2">Female</span>
         </label>
       </div>
-      <div className="relative z-0 w-full mb-5 group">
+      <div className="relative z-0 w-full mb-5 ">
         <input
           type="email"
-          name="floating_email"
-          id="floating_email"
+          name="email"
+          id="email"
+          value={data.email}
+          onChange={onChange}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
         />
         <label
-          htmlFor="floating_email"
+          htmlFor="email"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Email address
@@ -145,26 +158,25 @@ function EditProfile() {
         >
           Upload avatar
         </label>
-        {image && <img src={image} alt="" className="rounded-lg" />}
+      </div>
+
+      <div className="w-full">
+        <button
+          type="submit"
+          className="bg-primary text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        >
+          Submit
+        </button>
       </div>
 
       <input
         className="opacity-0"
         id="file_input"
-        name="imageUrl"
-        required
         type="file"
         accept="image/*"
-        onChange={onChangeImage}
-        value={data.imageUrl}
+        name="imageUrl"
+        onChange={onChange}
       />
-
-      <button
-        type="submit"
-        className="bg-primary text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-      >
-        Submit
-      </button>
     </form>
   );
 }

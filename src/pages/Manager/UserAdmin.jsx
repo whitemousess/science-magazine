@@ -1,13 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReactPaginate from "react-paginate";
 
+import * as userService from "~/services/userService";
+
 function UserAdmin() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [data, setData] = useState([]);
+
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setCurrentPage(selectedPage.selected + 1);
   };
+
+  const fetch = () => {
+    userService
+      .getUser()
+      .then((user) => {
+        setData(user.data);
+        setTotalPage(user.totalPages);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
     <div className="w-full px-10">
@@ -26,51 +47,62 @@ function UserAdmin() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Course name
+                Họ tên
               </th>
               <th scope="col" className="px-6 py-3">
-                Description
+                Email
               </th>
               <th scope="col" className="px-6 py-3">
-                Price
+                Giới tính
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-100 ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+            {data.map((item) => (
+              <tr
+                key={item._id}
+                className="bg-white border-b hover:bg-gray-100 "
               >
-                Apple MacBook Pro 17
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
-                  Edit
-                </a>
-              </td>
-            </tr>
+                  {item.fullName}
+                </th>
+                <td className="px-6 py-4">{item.email}</td>
+                <td className="px-6 py-4">
+                  {item.gender === 0 ? "Nam" : "Nữ"}
+                </td>
+                <td className="py-4 px-4 text-right">
+                  <a
+                    href="#"
+                    className="font-medium text-blue-600 hover:underline px-2"
+                  >
+                    Edit
+                  </a>
+                  <a
+                    href="#"
+                    className="font-medium text-red-600 hover:underline px-2"
+                  >
+                    Xóa
+                  </a>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      
+
       <ReactPaginate
-        pageCount={10}
+        pageCount={totalPage}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         onPageChange={handlePageChange}
         containerClassName={"pagination"}
         activeClassName={"underline"}
-        previousLabel={currentPage === 0 ? null : <IoIosArrowBack />}
-        nextLabel={currentPage === 9 ? null : <IoIosArrowForward />}
+        previousLabel={currentPage === 1 ? null : <IoIosArrowBack />}
+        nextLabel={currentPage >= totalPage ? null : <IoIosArrowForward />}
         className="flex justify-end mt-4"
         pageLinkClassName={"p-3"}
         pageClassName={"my-auto"}

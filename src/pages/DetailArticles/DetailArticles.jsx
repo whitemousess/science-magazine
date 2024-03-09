@@ -1,5 +1,5 @@
-function Profile() {
-  return <div>Profile</div>;
+function DetailArticles() {
+  return <div>DetailArticles</div>;
 }
 
-export default Profile;
+export default DetailArticles;

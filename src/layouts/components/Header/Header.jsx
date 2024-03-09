@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Header() {
-  const { currentUser, role } = useContext(AuthContext);
+  const { token, role } = useContext(AuthContext);
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function Header() {
         </div>
       )}
 
-      {currentUser ? (
+      {token ? (
         <Menu />
       ) : (
         <div>

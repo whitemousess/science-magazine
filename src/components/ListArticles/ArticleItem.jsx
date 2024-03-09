@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function ArticleItem() {
   return (
-    <div className="flex flex-col justify-center w-full bg-gray-100 rounded-xl overflow-hidden mb-6">
+    <div className="flex flex-col justify-center w-full xl:w-1/2 bg-gray-100 rounded-xl overflow-hidden mb-6">
       <div className="px-4 py-3 flex items-center">
         <div className="w-[50px] h-[50px] bg-neutral-400 rounded-full mr-2"></div>
         <p className="font-medium">FullName</p>

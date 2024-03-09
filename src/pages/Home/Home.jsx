@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ListArticles from "~/components/ListArticles";
-import Footer from "~/components/Footer";
 import routes from "~/config/routes";
 
 function Home() {
@@ -61,9 +60,11 @@ function Home() {
 
       <ListArticles data={dataArticles} />
 
-      <Link to={routes.articles}>Xem thêm</Link>
-
-      <Footer />
+      <div className="flex justify-center">
+        <Link to={routes.articles} className="border px-4 py-2 rounded-xl hover:bg-primary hover:text-white hover:font-medium">
+          Xem thêm
+        </Link>
+      </div>
     </>
   );
 }
