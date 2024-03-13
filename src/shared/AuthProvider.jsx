@@ -29,11 +29,12 @@ export const AuthProvider = ({ children }) => {
           navigate(routes.home);
         }
       })
-      .catch((err) =>
+      .catch((err) => {
+        setIsLoading(false);
         err.response.status === 404
           ? alert(err.response.data.error)
-          : alert(err.response.data.error)
-      );
+          : alert(err.response.data.error);
+      });
   };
 
   const register = (data) => {

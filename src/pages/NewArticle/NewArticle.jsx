@@ -1,12 +1,35 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
 import TextInput from "~/components/TextInput";
+import { newArticles } from "~/services/articlesService";
 
 function NewArticle() {
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const addArticle = async () => {
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", description);
+    formData.append("imageUrl", data.imageUrl);
+
+    await newArticles({ data: formData })
+      .then((res) => {
+        if (res.data) {
+          alert("Thêm mới thành công");
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
 
   const modules = {
     toolbar: [
@@ -26,10 +49,14 @@ function NewArticle() {
     const newData = { ...data };
     newData[e.target.name] = e.target.value;
     setData(newData);
-    const file = e.target.files[0];
+  };
+
+  const onChangImages = (e) => {
+    const file = e?.target?.files[0];
     if (file && file.type.startsWith("image/")) {
       const img = URL.createObjectURL(e.target.files[0]);
       setShowImage(img);
+      setData({...data, imageUrl: file });
     }
   };
 
@@ -65,12 +92,12 @@ function NewArticle() {
           modules={modules}
         />
 
-        <div className="">
+        <div>
           <button
-            type="submit"
             className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            onClick={() => (isLoading ? null : addArticle())}
           >
-            Submit
+            {isLoading ? "Đang đăng ..." : "Đăng bài"}
           </button>
         </div>
 
@@ -81,8 +108,7 @@ function NewArticle() {
           required
           type="file"
           accept="image/*"
-          onChange={onChange}
-          value={data.imageUrl}
+          onChange={onChangImages}
         />
       </div>
     </div>
