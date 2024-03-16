@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { httpRequest } from "~/utils/httprequest";
 
-const token = localStorage.token;
 
 export const login = ({ data }) => {
   try {
@@ -23,6 +22,8 @@ export const Register = ({ data }) => {
 
 export const getCurrentUser = async () => {
   try {
+    const token = await window.localStorage.getItem("token");
+    
     const res = await httpRequest.get("user/current-user", {
       headers: {
         authorization: "Bearer " + token,
@@ -36,6 +37,7 @@ export const getCurrentUser = async () => {
 
 export const getUserById = async ({ id }) => {
   try {
+    const token = await window.localStorage.getItem("token");
     const res = await httpRequest.get(`user/get-user/${id}`, {
       headers: {
         authorization: "Bearer " + token,
@@ -49,6 +51,8 @@ export const getUserById = async ({ id }) => {
 
 export const getUser = async () => {
   try {
+    const token = await window.localStorage.getItem("token");
+
     const res = await httpRequest.get(`user/get-user`, {
       headers: {
         authorization: "Bearer " + token,
@@ -62,6 +66,7 @@ export const getUser = async () => {
 
 export const editUser = async ({ id, data }) => {
   try {
+    const token = await window.localStorage.getItem("token");
     const res = await httpRequest.put(`user/edit-user/${id}`, data, {
       headers: {
         Authorization: "Bearer " + token,

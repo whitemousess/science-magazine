@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReactPaginate from "react-paginate";
+import Loading from "~/components/Loading";
 
 import * as userService from "~/services/userService";
 
@@ -19,7 +20,7 @@ function UserAdmin() {
       .getUser()
       .then((user) => {
         setData(user.data);
-        setTotalPage(user.totalPages);
+        setTotalPage(user.totalPage);
       })
       .catch((error) => {
         console.log(error);
@@ -29,6 +30,12 @@ function UserAdmin() {
   useEffect(() => {
     fetch();
   }, []);
+
+  if(!data){
+    return (
+      <Loading/>
+    )
+  }
 
   return (
     <div className="w-full px-10">
