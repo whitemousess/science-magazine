@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 
 import ArticleItem from "./ArticleItem";
+import EmptyClient from "../EmptyClient";
 
 function ListArticles({ data }) {
+  if (data.length === 0) {
+    return <EmptyClient />;
+  }
+
   return (
     <>
       <div className="md:px-24 px-4 ">

@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }) => {
         if (res.data) {
           alert("Thay đổi thành công");
           setCurrentUser(res.data);
+          navigate(-1);
         } else if (res.response.data.error.keyPattern.email) {
           alert("Email đã tồn tại");
         }

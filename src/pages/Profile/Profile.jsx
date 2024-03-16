@@ -5,18 +5,20 @@ import { Link } from "react-router-dom";
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
 import ListArticles from "~/components/ListArticles";
+import { getMyArticles } from "~/services/articlesService";
 
 function Profile() {
   const { currentUser } = useContext(AuthContext);
   const [dataArticles, setDataArticles] = useState([]);
 
   useEffect(() => {
-    setDataArticles([
-      { _id: 1, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 2, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 3, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 4, imageUrl: "", imageStatus: "", status: "" },
-    ]);
+    getMyArticles({ page: 1, perPage: 10 })
+      .then((data) => {
+        setDataArticles(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -52,7 +54,9 @@ function Profile() {
 
           <div className="border border-blue-200 rounded-[5px] overflow-hidden mb-2">
             <div className="bg-blue-200 px-4 py-2">Giới tính</div>
-            <div className="px-4 py-2">{currentUser.gender === 0 ? "Nam": "Nữ"}</div>
+            <div className="px-4 py-2">
+              {currentUser.gender === 0 ? "Nam" : "Nữ"}
+            </div>
           </div>
         </div>
       </div>

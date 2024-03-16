@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ListArticles from "~/components/ListArticles";
+
 import routes from "~/config/routes";
+import ListArticles from "~/components/ListArticles";
+import { getAllArticles } from "~/services/articlesService";
 
 function Home() {
   const [dataArticles, setDataArticles] = useState([]);
 
   useEffect(() => {
-    setDataArticles([
-      { _id: 1, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 2, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 3, imageUrl: "", imageStatus: "", status: "" },
-      { _id: 4, imageUrl: "", imageStatus: "", status: "" },
-    ]);
+    getAllArticles({ page: 1, perPage: 5 })
+      .then((data) => setDataArticles(data.data))
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -26,7 +25,13 @@ function Home() {
           </p>
         </div>
         <div className="md:w-1/2 flex justify-center">
-          <div className="w-[500px] h-[500px] bg-primary"></div>
+          {/* <div className="w-[500px] h-[500px] bg-primary"></div> */}
+          <img
+            src="public/logo.png"
+            alt=""
+            className="w-[500px] h-auto"
+            style={{ filter: "drop-shadow(15px 15px 5px rgba(0,0,0,.6)" }}
+          />
         </div>
       </div>
 
@@ -61,7 +66,10 @@ function Home() {
       <ListArticles data={dataArticles} />
 
       <div className="flex justify-center">
-        <Link to={routes.articles} className="border px-4 py-2 rounded-xl hover:bg-primary hover:text-white hover:font-medium">
+        <Link
+          to={routes.articles}
+          className="border px-4 py-2 rounded-xl hover:bg-primary hover:text-white hover:font-medium"
+        >
           Xem thêm
         </Link>
       </div>

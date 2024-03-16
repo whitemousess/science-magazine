@@ -41,7 +41,13 @@ function NewArticle() {
         { indent: "-1" },
         { indent: "+1" },
       ],
-      ["link", "image"],
+      [
+        { align: "" },
+        { align: "center" },
+        { align: "right" },
+        { align: "justify" },
+      ],
+      ["link"],
     ],
   };
 
