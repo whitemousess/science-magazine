@@ -1,26 +1,42 @@
-import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
 import ArticleItem from "./ArticleItem";
-import EmptyClient from "../EmptyClient";
-import { addFavorite, removeFavorite } from "~/services/favoriteService";
+import EmptyClient from "~/components/EmptyClient";
+import {
+  addFavorite,
+  getMyFavorite,
+  removeFavorite,
+} from "~/services/favoriteService";
 
-function ListArticles({ data }) {
-
-  if (data.length === 0) {
-    return <EmptyClient />;
-  }
+function ListArticles() {
+  const [data, setData] = useState([]);
 
   const liked = (id) => {
     addFavorite({ articleId: id })
-      .then()
+      .then(fetchData())
       .catch((error) => console.error(error));
   };
 
   const removeLiked = (id) => {
     removeFavorite({ id: id })
-      .then()
+      .then(fetchData())
       .catch((error) => console.log(error));
   };
+
+  const fetchData = () => {};
+  getMyFavorite({ page: 1, perPage: 10 })
+    .then((favorite) => {
+      setData(favorite.data);
+    })
+    .catch((error) => console.log(error));
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (data.length === 0) {
+    return <EmptyClient />;
+  }
 
   return (
     <>
@@ -40,9 +56,5 @@ function ListArticles({ data }) {
     </>
   );
 }
-
-ListArticles.propTypes = {
-  data: PropTypes.array.isRequired,
-};
 
 export default ListArticles;

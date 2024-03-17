@@ -1,25 +1,57 @@
-import { useState } from "react";
-import { CiSearch } from "react-icons/ci";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import ReactPaginate from "react-paginate";
+import { useCallback, useEffect, useState } from "react";
+import Paginate from "~/components/Paginate";
+import { deleteArticles, getAllArticles } from "~/services/articlesService";
 
 function ArticlesAdmin() {
-  const [currentPage, setCurrentPage] = useState(0);
-  
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [search, setSearch] = useState("");
+
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setCurrentPage(selectedPage.selected + 1);
   };
+
+  const formatTime = (time) => {
+    const date = new Date(time);
+    return date.toLocaleDateString();
+  };
+
+  const deleteArticle = (id) => {
+    deleteArticles({ id })
+      .then(() => {
+        fetchData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchData = useCallback(() => {
+    getAllArticles({ page: currentPage, perPage: 10, fullName: search })
+      .then((articles) => {
+        setData(articles.data);
+        setTotalPage(articles.totalPage);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [currentPage, search]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div className="w-full px-10">
       <div className="flex justify-end my-4">
         <div className="w-1/3 flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
-            placeholder="Search ..."
-            className="w-full pl-4 outline-none"
+            placeholder="Tìm kiếm theo tên"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-4 outline-none py-2"
           />
-
-          <CiSearch className="cursor-pointer w-10 h-10 p-2" color="#ccc" />
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -27,59 +59,57 @@ function ArticlesAdmin() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Course name
+                Tiêu đề
               </th>
               <th scope="col" className="px-6 py-3">
-                Description
+                Người đăng
               </th>
               <th scope="col" className="px-6 py-3">
-                Price
+                Thời gian
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
+              <th scope="col" className="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-100 ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                Apple MacBook Pro 17
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            {data.length > 0 ? (
+              data.map((item) => (
+                <tr
+                  key={item._id}
+                  className="bg-white border-b hover:bg-gray-100 "
                 >
-                  Edit
-                </a>
-              </td>
-            </tr>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {item.title}
+                  </th>
+                  <td className="px-6 py-4">{item.userId.fullName}</td>
+                  <td className="px-6 py-4">{formatTime(item.createdAt)}</td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      className="font-medium text-red-600  hover:underline px-2"
+                      onClick={() => deleteArticle(item._id)}
+                    >
+                      Xóa
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center py-4">
+                  Không có dữ liệu
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
-      <ReactPaginate
-        pageCount={10}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={1}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"underline"}
-        previousLabel={currentPage === 0 ? null : <IoIosArrowBack />}
-        nextLabel={currentPage === 9 ? null : <IoIosArrowForward />}
-        className="flex justify-end mt-4"
-        pageLinkClassName={"p-3"}
-        pageClassName={"my-auto"}
-        nextLinkClassName={"p-3"}
-        previousLinkClassName={"p-3"}
-        previousClassName={"my-auto"}
-        nextClassName={"my-auto"}
-        breakLinkClassName={"p-3"}
-        breakClassName={"my-auto"}
+
+      <Paginate
+        totalPage={totalPage}
+        handlePageChange={handlePageChange}
+        currentPage={currentPage}
       />
     </div>
   );

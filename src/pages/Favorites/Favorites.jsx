@@ -1,14 +1,8 @@
-import ListArticles from "~/components/ListArticles";
+import ListArticles from "./ListArticles";
 
 function Favorites() {
-  const data = [
-    { _id: 1, imageUrl: "", imageStatus: "", status: "" },
-    { _id: 2, imageUrl: "", imageStatus: "", status: "" },
-    { _id: 3, imageUrl: "", imageStatus: "", status: "" },
-    { _id: 4, imageUrl: "", imageStatus: "", status: "" },
-  ];
 
-  return <ListArticles data={data} />;
+  return <ListArticles/>;
 }
 
 export default Favorites;

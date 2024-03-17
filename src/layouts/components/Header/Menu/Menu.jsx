@@ -6,6 +6,7 @@ import { FaHeart, FaPencilRuler, FaUserCircle } from "react-icons/fa";
 import ListItem from "./ListItem";
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
+import Avatar from "~/components/Avatar";
 
 function Menu() {
   const { logOut, currentUser } = useContext(AuthContext);
@@ -45,15 +46,11 @@ function Menu() {
     <div className="relative">
       {role === 1 ? (
         <div className="cursor-pointer group">
-          {!currentUser.imageUrl ? (
-            <FaUserCircle size={50} className="p-2" />
-          ) : (
-            <img
-              src={currentUser.imageUrl}
-              alt="avatar"
-              className="w-[42px] h-[42px] rounded-full"
-            />
-          )}
+          <Avatar
+            src={currentUser.imageUrl}
+            alt="avatar"
+            className="w-[42px] h-[42px] rounded-full p-2"
+          />
           <div className="absolute hidden group-hover:block w-[170px] right-0 border rounded-md bg-white z-10 select-none group">
             {MENU_STUDENT.map((data) => (
               <ListItem key={data.title} data={data} />
@@ -63,7 +60,7 @@ function Menu() {
       ) : (
         <div className="flex justify-center items-center">
           <Link
-            to={routes.homeManager}
+            to={routes.userAdmin}
             className="bg-primary text-white font-medium px-4 py-2 rounded-lg "
           >
             Dashboard

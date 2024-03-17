@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import 'react-quill/dist/quill.snow.css';
+
 import { publicRoutes } from "./routes";
 import { DefaultLayout } from "~/layouts";
 import { AuthProvider } from "./shared/AuthProvider";

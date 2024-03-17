@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
 import ListArticles from "~/components/ListArticles";
 import { getMyArticles } from "~/services/articlesService";
+import Avatar from "~/components/Avatar";
 
 function Profile() {
   const { currentUser } = useContext(AuthContext);
@@ -25,15 +25,11 @@ function Profile() {
     <>
       <div className="flex justify-center w-full">
         <div className="px-10 flex flex-col items-center justify-center">
-          {!currentUser.imageUrl ? (
-            <FaUserCircle size={100} />
-          ) : (
-            <img
-              src={currentUser.imageUrl}
-              alt="avatar"
-              className="w-[100px] h-[100px] rounded-full"
-            />
-          )}
+          <Avatar
+            src={currentUser.imageUrl}
+            alt="avatar"
+            className="w-[100px] h-[100px] rounded-full"
+          />
           <Link
             to={routes.editProfile}
             className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "

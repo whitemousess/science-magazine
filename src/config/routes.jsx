@@ -8,13 +8,14 @@ const routes = {
   articles: "/articles",
   detailArticles: "/articles/:id",
   newArticle: "/articles/new",
+  editArticle: "/articles/edit/:id",
 
   login: "/login",
   register: "/register",
 
-  homeManager: "/manager/home",
-  userAdmin: "/manager/admin/student",
-  articlesAdmin: "/manager/admin/course",
+  userAdmin: "/manager/home",
+  editUser: "/manager/user-edit/:id",
+  articlesAdmin: "/manager/admin/articles",
 };
 
 export default routes;

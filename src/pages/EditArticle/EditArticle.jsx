@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useParams } from "react-router-dom";
 
 import TextInput from "~/components/TextInput";
-import { newArticles } from "~/services/articlesService";
+import { editArticles, getDetailArticles } from "~/services/articlesService";
 
-function NewArticle() {
+function EditArticle() {
+  const { id } = useParams();
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
@@ -18,11 +20,9 @@ function NewArticle() {
     formData.append("description", description);
     formData.append("imageUrl", data.imageUrl);
 
-    await newArticles({ data: formData })
-      .then((res) => {
-        if (res.data) {
-          alert("Thêm mới thành công");
-        }
+    await editArticles({ id, data: formData })
+      .then(() => {
+        alert("Sửa thành công");
         setIsLoading(false);
       })
       .catch((err) => {
@@ -65,6 +65,20 @@ function NewArticle() {
       setData({ ...data, imageUrl: file });
     }
   };
+
+  useEffect(() => {
+    getDetailArticles({ id })
+      .then((article) => {
+        setData(article.data);
+        setDescription(article.data.description);
+        setShowImage(article.data.imageUrl);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
+  console.log(data);
 
   return (
     <div className="px-10">
@@ -121,4 +135,4 @@ function NewArticle() {
   );
 }
 
-export default NewArticle;
+export default EditArticle;

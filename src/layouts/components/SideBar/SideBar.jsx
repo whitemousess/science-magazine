@@ -3,10 +3,6 @@ import routes from "~/config/routes";
 
 const SIDEBAR_ADMIN = [
   {
-    title: "Trang chủ",
-    link: routes.homeManager,
-  },
-  {
     title: "Người dùng",
     link: routes.userAdmin,
   },

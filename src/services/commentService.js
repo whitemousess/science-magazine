@@ -17,18 +17,38 @@ export const addComment = async ({ articleId, data }) => {
   }
 };
 
-export const getCommentArticle = async ({ articleId, page, perPage }) => {
+export const editComment = async ({ commentId, data }) => {
   try {
-    const res = await httpRequest.get(`comment/get-comment-article/${articleId}`, {
-      params: { page, per_Page: perPage },
-    });
+    const token = await localStorage.token;
+    const res = await httpRequest.put(
+      `comment/edit-comment/${commentId}`,
+      data,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return res.data;
   } catch (error) {
     return error;
   }
 };
 
-export const removeFavorite = async ({ id }) => {
+export const getCommentArticle = async ({ articleId, page, perPage }) => {
+  try {
+    console.log(page, perPage);
+    const res = await httpRequest.get(
+      `comment/get-comment-article/${articleId}`,
+      {
+        params: { page, per_page: perPage },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const removeComment = async ({ id }) => {
   try {
     const token = await localStorage.token;
     const res = await httpRequest.delete(`comment/remove-comment/${id}`, {

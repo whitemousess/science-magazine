@@ -4,7 +4,19 @@ import { httpRequest } from "~/utils/httprequest";
 export const addFavorite = async ({ articleId }) => {
   try {
     const token = await localStorage.token;
-    const res = await httpRequest.post(`favorite/add-favorite/${articleId}`, {
+    const res = await httpRequest.get(`favorite/add-favorite/${articleId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const searchFavorite = async ({ articleId }) => {
+  try {
+    const token = await localStorage.token;
+    const res = await httpRequest.get(`favorite/search-favorite/${articleId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;

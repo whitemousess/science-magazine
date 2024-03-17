@@ -84,13 +84,13 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser({});
     setToken("");
     setRole(1);
-    navigate(routes.home);
+    window.location.reload();
   };
 
   const isLogged = async () => {
     try {
       setIsLoading(true);
-      const Token = window.localStorage.getItem("token");
+      const Token = await window.localStorage.getItem("token");
       if (Token) {
         const res = await userService.getCurrentUser({});
         if (res.data) {
@@ -103,7 +103,11 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      await window.localStorage.removeItem("token");
+      setToken("");
+      setCurrentUser({});
+      setRole(0);
+      setIsLoading(false);
     }
   };
 
