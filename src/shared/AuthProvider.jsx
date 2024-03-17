@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => {
         setIsLoading(false);
+        console.log(err);
         err.response.status === 404
           ? alert(err.response.data.error)
           : alert(err.response.data.error);
@@ -84,7 +85,7 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser({});
     setToken("");
     setRole(1);
-    window.location.reload();
+    window.location.href = "/";
   };
 
   const isLogged = async () => {

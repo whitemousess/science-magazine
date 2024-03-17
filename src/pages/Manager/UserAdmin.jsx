@@ -17,7 +17,10 @@ function UserAdmin() {
 
   const deleteUserAdmin = (id) => {
     deleteUser({ id })
-      .then(fetch())
+      .then((item) => {
+        console.log(item);
+        fetch();
+      })
       .catch((error) => console.log(error));
   };
 

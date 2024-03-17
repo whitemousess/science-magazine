@@ -35,7 +35,6 @@ export const editComment = async ({ commentId, data }) => {
 
 export const getCommentArticle = async ({ articleId, page, perPage }) => {
   try {
-    console.log(page, perPage);
     const res = await httpRequest.get(
       `comment/get-comment-article/${articleId}`,
       {

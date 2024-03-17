@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import routes from "~/config/routes";
 import ListArticles from "~/components/ListArticles";
 import { getAllArticles } from "~/services/articlesService";
+import Logo from "~/assets/logo.png";
 
 function Home() {
   const [dataArticles, setDataArticles] = useState([]);
@@ -26,14 +27,13 @@ function Home() {
         </div>
         <div className="md:w-1/2 flex justify-center">
           <img
-            src="public/logo.png"
+            src={Logo}
             alt=""
             className="w-[500px] h-auto"
             style={{ filter: "drop-shadow(15px 15px 5px rgba(0,0,0,.6)" }}
           />
         </div>
       </div>
-
 
       <ListArticles data={dataArticles} />
 

@@ -34,7 +34,7 @@ function ListArticles() {
     fetchData();
   }, []);
 
-  if (data.length === 0) {
+  if (!data || data.length === 0) {
     return <EmptyClient />;
   }
 
