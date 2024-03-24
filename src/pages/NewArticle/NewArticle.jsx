@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import TextInput from "~/components/TextInput";
 import { newArticles } from "~/services/articlesService";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function NewArticle() {
+  const {token} = useContext(AuthContext);
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
@@ -19,10 +21,8 @@ function NewArticle() {
     formData.append("imageUrl", data.imageUrl);
 
     await newArticles({ data: formData })
-      .then((res) => {
-        if (res.data) {
-          alert("Thêm mới thành công");
-        }
+      .then(() => {
+        alert("Thêm mới thành công");
         setIsLoading(false);
       })
       .catch((err) => {
@@ -66,6 +66,9 @@ function NewArticle() {
     }
   };
 
+  if (!token) {
+    return;
+  }
   return (
     <div className="px-10">
       {showImage && (

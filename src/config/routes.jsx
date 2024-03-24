@@ -1,6 +1,8 @@
 // move router
 
 const routes = {
+  notfound: "*",
+
   home: "/",
   profile: "/profile",
   editProfile: "/profile/edit",

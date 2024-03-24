@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import ArticleItem from "./ArticleItem";
 import EmptyClient from "~/components/EmptyClient";
@@ -7,8 +7,10 @@ import {
   getMyFavorite,
   removeFavorite,
 } from "~/services/favoriteService";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function ListArticles() {
+  const { token } = useContext(AuthContext);
   const [data, setData] = useState([]);
 
   const liked = (id) => {
@@ -24,11 +26,12 @@ function ListArticles() {
   };
 
   const fetchData = () => {};
-  getMyFavorite({ page: 1, perPage: 10 })
-    .then((favorite) => {
-      setData(favorite.data);
-    })
-    .catch((error) => console.log(error));
+  token &&
+    getMyFavorite({ page: 1, perPage: 10 })
+      .then((favorite) => {
+        setData(favorite.data);
+      })
+      .catch((error) => console.log(error));
 
   useEffect(() => {
     fetchData();

@@ -1,3 +1,4 @@
+import Pusher from "pusher-js";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
@@ -16,7 +17,7 @@ import { AuthContext } from "~/shared/AuthProvider";
 
 function Comment() {
   const { id } = useParams();
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser,token } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [comment, setComment] = useState({ comment: "" });
   const [inputEdit, setInputEdit] = useState("");
@@ -69,36 +70,53 @@ function Comment() {
   };
 
   useEffect(() => {
+    const pusher = new Pusher(import.meta.env.VITE_KEY_PUSHER, {
+      cluster: import.meta.env.VITE_CLUSTER_PUSHER,
+    });
+    const channel = pusher.subscribe(id);
+
+    channel.bind("comment", () => {
+      fetchData();
+    });
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [fetchData, id]);
+
+  useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   return (
     <div className="mx-10 my-4 ">
-      <form
-        onSubmit={submitComment}
-        className="flex  justify-between border rounded-lg"
-      >
-        <input
-          type="text"
-          placeholder="Nhập bình luận ..."
-          className="w-full px-6 py-2 outline-none"
-          name="comment"
-          value={comment.comment}
-          onChange={(e) => setComment({ comment: e.target.value })}
-          required
-          aria-label="123"
-        />
-        <button type="submit">
-          <IoSendSharp
-            className={`p-4 ${
-              !comment.comment
-                ? "text-gray-300"
-                : "text-blue-600 cursor-pointer"
-            }`}
-            size={50}
+      {token && (
+        <form
+          onSubmit={submitComment}
+          className="flex  justify-between border rounded-lg"
+        >
+          <input
+            type="text"
+            placeholder="Nhập bình luận ..."
+            className="w-full px-6 py-2 outline-none"
+            name="comment"
+            value={comment.comment}
+            onChange={(e) => setComment({ comment: e.target.value })}
+            required
+            aria-label="123"
           />
-        </button>
-      </form>
+          <button type="submit">
+            <IoSendSharp
+              className={`p-4 ${
+                !comment.comment
+                  ? "text-gray-300"
+                  : "text-blue-600 cursor-pointer"
+              }`}
+              size={50}
+            />
+          </button>
+        </form>
+      )}
       <form
         onSubmit={submitEdit}
         className="border mt-2 rounded-xl select-none"

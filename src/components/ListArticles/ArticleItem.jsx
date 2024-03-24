@@ -2,15 +2,26 @@ import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { CiChat1 } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { searchFavorite } from "~/services/favoriteService";
 import { AuthContext } from "~/shared/AuthProvider";
 import Avatar from "../Avatar";
+import routes from "~/config/routes";
 
 function ArticleItem({ data, liked, removeLiked }) {
   const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleLike = () => {
+    if (token) {
+      isFavorite ? removeLiked(data._id) : liked(data._id);
+      setIsFavorite(!isFavorite);
+    } else {
+      navigate(routes.login);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -47,17 +58,14 @@ function ArticleItem({ data, liked, removeLiked }) {
             className={`w-1/2 flex justify-center items-center py-1  ${
               isFavorite && `text-primary font-medium`
             } hover:bg-slate-300 cursor-pointer rounded`}
-            onClick={() => {
-              isFavorite ? removeLiked(data._id) : liked(data._id);
-              setIsFavorite(!isFavorite);
-            }}
+            onClick={handleLike}
           >
             <AiFillLike size={20} className={`m-2`} />
             <p className="text-lg">Thích</p>
           </div>
 
           <Link
-            to={`/articles/${data._id}`}
+            to={token ? `/articles/${data._id}` : routes.login}
             className="w-1/2 flex justify-center items-center py-1 hover:bg-slate-300 cursor-pointer rounded"
           >
             <CiChat1 size={20} className="m-2 text-" />

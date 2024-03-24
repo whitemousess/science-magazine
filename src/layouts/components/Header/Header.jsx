@@ -12,7 +12,7 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      if (window.scrollY >= 200) {
+      if (window.scrollY >= 100) {
         setScroll(true);
       } else {
         setScroll(false);
@@ -22,7 +22,7 @@ function Header() {
 
   return (
     <div
-      className={`py-4 px-10 w-full flex justify-between z-50 items-center bg-white ${
+      className={`py-4 px-10 w-full flex md:justify-between justify-end z-50 items-center bg-white ${
         scroll && "fixed"
       }`}
     >

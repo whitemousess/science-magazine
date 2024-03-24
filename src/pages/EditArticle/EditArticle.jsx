@@ -7,7 +7,7 @@ import TextInput from "~/components/TextInput";
 import { editArticles, getDetailArticles } from "~/services/articlesService";
 
 function EditArticle() {
-  const { id } = useParams();
+  const { id, token } = useParams();
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
@@ -78,7 +78,9 @@ function EditArticle() {
       });
   }, [id]);
 
-  console.log(data);
+  if (!token) {
+    return;
+  }
 
   return (
     <div className="px-10">
@@ -117,7 +119,7 @@ function EditArticle() {
             className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
             onClick={() => (isLoading ? null : addArticle())}
           >
-            {isLoading ? "Đang đăng ..." : "Đăng bài"}
+            {isLoading ? "Đang sửa ..." : "Sửa thông tin"}
           </button>
         </div>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import routes from "~/config/routes";
@@ -9,11 +9,15 @@ import Logo from "~/assets/Logo.png";
 function Home() {
   const [dataArticles, setDataArticles] = useState([]);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     getAllArticles({ page: 1, perPage: 5 })
       .then((data) => setDataArticles(data.data))
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>

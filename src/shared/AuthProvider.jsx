@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import * as userService from "~/services/userService";
 import { useNavigate } from "react-router-dom";
-import routes from "~/config/routes";
 import Loading from "~/components/Loading";
 
 export const AuthContext = createContext();
@@ -26,7 +25,7 @@ export const AuthProvider = ({ children }) => {
           setRole(res.data.role);
           setToken(res.data.token);
           setIsLoading(false);
-          navigate(routes.home);
+          navigate(-1);
         }
       })
       .catch((err) => {

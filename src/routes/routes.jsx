@@ -13,8 +13,11 @@ import Favorites from "~/pages/Favorites";
 import EditProfile from "~/pages/Profile/EditProfile";
 import Articles from "~/pages/Articles";
 import EditArticle from "~/pages/EditArticle";
+import NotFound from "~/components/NotFound";
 
 const publicRoutes = [
+  { path: config.routes.notfound, component: NotFound },
+
   { path: config.routes.home, component: Home },
   { path: config.routes.articles, component: Articles },
   { path: config.routes.detailArticles, component: DetailArticles },

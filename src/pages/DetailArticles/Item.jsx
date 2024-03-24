@@ -8,15 +8,26 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
 import { searchFavorite } from "~/services/favoriteService";
 import Comment from "./Comment";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Avatar from "~/components/Avatar";
 import Modal from "~/components/Modal";
+import routes from "~/config/routes";
 
 function Item({ data, liked, removeLiked, deleteArticle }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { token, currentUser } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const handleLike = () => {
+    if (token) {
+      isFavorite ? removeLiked(data._id) : liked(data._id);
+      setIsFavorite(!isFavorite);
+    } else {
+      navigate(routes.login);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -34,7 +45,7 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
           <img
             src={data.imageUrl}
             alt={data.title}
-            className="h-[300px] w-auto"
+            className="h-[100vh] w-auto"
           />
         </div>
       </div>
@@ -76,10 +87,7 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
           className={`w-1/2 flex justify-center items-center py-1  ${
             isFavorite && `text-primary font-medium`
           } hover:bg-slate-300 cursor-pointer rounded`}
-          onClick={() => {
-            isFavorite ? removeLiked(data._id) : liked(data._id);
-            setIsFavorite(!isFavorite);
-          }}
+          onClick={handleLike}
         >
           <AiFillLike size={20} className={`m-2`} />
           <p className="text-lg">Thích</p>

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
@@ -8,18 +8,24 @@ import { getMyArticles } from "~/services/articlesService";
 import Avatar from "~/components/Avatar";
 
 function Profile() {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, token } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [dataArticles, setDataArticles] = useState([]);
 
   useEffect(() => {
-    getMyArticles({ page: 1, perPage: 10 })
-      .then((data) => {
-        setDataArticles(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    token &&
+      getMyArticles({ page: 1, perPage: 10 })
+        .then((data) => {
+          setDataArticles(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [token, navigate]);
+
+  if (!token) {
+    return;
+  }
 
   return (
     <>
