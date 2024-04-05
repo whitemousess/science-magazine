@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Footer from "~/components/Footer";
+import Footer from "~/layouts/components/Footer";
 
 import Header from "~/layouts/components/Header";
 
