@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import routes from "~/config/routes";
 import ListArticles from "~/components/ListArticles";
 import { getAllArticles } from "~/services/articlesService";
-import Logo from "~/assets/Logo.png";
+import Logo from "~/assets/logo.png";
 
 function Home() {
   const [dataArticles, setDataArticles] = useState([]);
