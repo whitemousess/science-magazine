@@ -3,28 +3,14 @@ import routes from "~/config/routes";
 import { MdBiotech } from "react-icons/md";
 
 import Menu from "./Menu";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Header() {
   const { token } = useContext(AuthContext);
-  const [scroll, setScroll] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY >= 100) {
-        setScroll(true);
-      } else {
-        setScroll(false);
-      }
-    });
-  }, []);
-
   return (
     <div
-      className={`py-4 px-10 w-full flex md:justify-between justify-end z-50 items-center bg-white ${
-        scroll && "fixed"
-      }`}
+      className={`py-4 px-10 w-full flex md:justify-between justify-end z-50 items-center bg-white fixed`}
     >
       <Link to={routes.home} className="p-2 md:block hidden">
       <MdBiotech size={30} />
