@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
 
 import TextInput from "~/components/TextInput";
 import { editArticles, getDetailArticles } from "~/services/articlesService";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function EditArticle() {
-  const { id, token } = useParams();
+  const { id } = useParams();
+  const {token} = useContext(AuthContext)
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
@@ -77,6 +79,7 @@ function EditArticle() {
         console.log(error);
       });
   }, [id]);
+
 
   if (!token) {
     return;
