@@ -9,7 +9,7 @@ import { AuthContext } from "~/shared/AuthProvider";
 
 function EditArticle() {
   const { id } = useParams();
-  const {token} = useContext(AuthContext)
+  const { token } = useContext(AuthContext);
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
@@ -36,7 +36,7 @@ function EditArticle() {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, false] }],
-      ["bold", "italic", "underline"],
+      ["bold", "italic", "underline",],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -49,7 +49,9 @@ function EditArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      ["link"],
+      [
+        'size',"link","image"],
+      
     ],
   };
 
@@ -79,7 +81,6 @@ function EditArticle() {
         console.log(error);
       });
   }, [id]);
-
 
   if (!token) {
     return;

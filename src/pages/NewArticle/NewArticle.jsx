@@ -34,7 +34,7 @@ function NewArticle() {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, false] }],
-      ["bold", "italic", "underline"],
+      ["bold", "italic", "underline",],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -47,9 +47,12 @@ function NewArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      ["link"],
+      [
+        'size',"link","image"],
+      
     ],
   };
+
 
   const onChange = (e) => {
     const newData = { ...data };
