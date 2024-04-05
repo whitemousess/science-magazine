@@ -7,7 +7,7 @@ function DefaultLayout({ children }) {
   return (
     <div>
       <Header />
-      <div>{children}</div>
+      <div className="pt-[46px]">{children}</div>
       <Footer />
     </div>
   );
