@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import * as userService from "~/services/userService";
 import { useNavigate } from "react-router-dom";
 import Loading from "~/components/Loading";
-import routes from "~/config/routes";
 
 export const AuthContext = createContext();
 
@@ -26,7 +25,7 @@ export const AuthProvider = ({ children }) => {
           setRole(res.data.role);
           setToken(res.data.token);
           setIsLoading(false);
-          navigate(routes.home);
+          navigate(-1);
         }
       })
       .catch((err) => {
@@ -72,7 +71,7 @@ export const AuthProvider = ({ children }) => {
         if (res.data) {
           alert("Thay đổi thành công");
           setCurrentUser(res.data);
-          navigate(routes.home);
+          navigate(-1);
         } else if (res.response.data.error.keyPattern.email) {
           alert("Email đã tồn tại");
         }
