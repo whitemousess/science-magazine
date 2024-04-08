@@ -78,7 +78,7 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
           </div>
         )}
       </div>
-      <div className="ql-editor lg:px-[140px] px-6">
+      <div className="ql-editor xl:px-[340px] sm:px-[100px] px-10">
         <div dangerouslySetInnerHTML={{ __html: data.description }} />
       </div>
 

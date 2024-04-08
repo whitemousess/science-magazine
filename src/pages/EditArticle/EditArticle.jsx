@@ -2,10 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize-module-react';
 
 import TextInput from "~/components/TextInput";
 import { editArticles, getDetailArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
+
+Quill.register('modules/imageResize', ImageResize);
 
 function EditArticle() {
   const { id } = useParams();
@@ -49,10 +53,12 @@ function EditArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      [
-        'size',"link","image"],
-      
+      ['size', "link", "image"],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize']
+    }
   };
 
   const onChange = (e) => {

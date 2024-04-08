@@ -1,10 +1,14 @@
 import { useContext, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize-module-react';
 
 import TextInput from "~/components/TextInput";
 import { newArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
+
+Quill.register('modules/imageResize', ImageResize);
 
 function NewArticle() {
   const {token} = useContext(AuthContext);
@@ -47,10 +51,12 @@ function NewArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      [
-        'size',"link","image"],
-      
+      ['size',"link","image"],
     ],
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize']
+   }
   };
 
 
