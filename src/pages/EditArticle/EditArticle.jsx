@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize-module-react';
 
@@ -12,6 +12,7 @@ import { AuthContext } from "~/shared/AuthProvider";
 Quill.register('modules/imageResize', ImageResize);
 
 function EditArticle() {
+  const navigate = useNavigate()
   const { id } = useParams();
   const { token } = useContext(AuthContext);
   const [data, setData] = useState({ title: "", imageUrl: "" });
@@ -30,6 +31,7 @@ function EditArticle() {
       .then(() => {
         alert("Sửa thành công");
         setIsLoading(false);
+        navigate(-1)
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +82,7 @@ function EditArticle() {
     getDetailArticles({ id })
       .then((article) => {
         setData(article.data);
-        setDescription(article.data.description);
+        setDescription(article.data.description.description);
         setShowImage(article.data.imageUrl);
       })
       .catch((error) => {

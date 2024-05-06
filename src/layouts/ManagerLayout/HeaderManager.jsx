@@ -13,7 +13,15 @@ function HeaderManager() {
       <Link to={routes.home} className="p-2">
         <MdBiotech size={30} />
       </Link>
-      <CiLogout size={30} className="cursor-pointer" onClick={logOut} />
+      <div className="flex items-center">
+        <Link
+          to={routes.newMagazine}
+          className="bg-primary text-white px-4 py-2 mr-2 rounded-lg"
+        >
+          Thêm trang tạp chí
+        </Link>
+        <CiLogout size={30} className="cursor-pointer" onClick={logOut} />
+      </div>
     </div>
   );
 }

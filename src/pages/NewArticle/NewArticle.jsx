@@ -1,21 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from 'quill';
-import ImageResize from 'quill-image-resize-module-react';
+import Quill from "quill";
+import ImageResize from "quill-image-resize-module-react";
 
 import TextInput from "~/components/TextInput";
 import { newArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
+import { getAllMagazine } from "~/services/magazineService";
 
-Quill.register('modules/imageResize', ImageResize);
+Quill.register("modules/imageResize", ImageResize);
 
 function NewArticle() {
-  const {token} = useContext(AuthContext);
-  const [data, setData] = useState({ title: "", imageUrl: "" });
+  const { token } = useContext(AuthContext);
+  const [data, setData] = useState({ title: "", imageUrl: "", magazineId: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectMagazine, setSelectMagazine] = useState([]);
 
   const addArticle = async () => {
     setIsLoading(true);
@@ -38,7 +40,7 @@ function NewArticle() {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, false] }],
-      ["bold", "italic", "underline",],
+      ["bold", "italic", "underline"],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -51,14 +53,13 @@ function NewArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      ['size',"link","image"],
+      ["size", "link", "image"],
     ],
     imageResize: {
-      parchment: Quill.import('parchment'),
-      modules: ['Resize', 'DisplaySize']
-   }
+      parchment: Quill.import("parchment"),
+      modules: ["Resize", "DisplaySize"],
+    },
   };
-
 
   const onChange = (e) => {
     const newData = { ...data };
@@ -74,6 +75,16 @@ function NewArticle() {
       setData({ ...data, imageUrl: file });
     }
   };
+
+  useEffect(() => {
+    getAllMagazine({})
+      .then((magazine) => {
+        setSelectMagazine(magazine.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   if (!token) {
     return;
@@ -109,6 +120,15 @@ function NewArticle() {
           onChange={setDescription}
           modules={modules}
         />
+        
+        <select name="magazineId" onChange={onChange} required className="border mt-2 py-3 px-2 rounded">
+          <option value="">Chọn chuyên mục</option>
+          {selectMagazine.map((magazine) => (
+            <option key={magazine._id} value={magazine._id}>
+              {magazine.title}
+            </option>
+          ))}
+        </select>
 
         <div>
           <button

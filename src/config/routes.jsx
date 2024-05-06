@@ -12,12 +12,18 @@ const routes = {
   newArticle: "/articles/new",
   editArticle: "/articles/edit/:id",
 
+  introMagazine: "/intro/magazine",
+  introContact: "/intro/contact",
+  introCopyright: "/intro/Copyright",
+
   login: "/login",
   register: "/register",
 
   userAdmin: "/manager/home",
   editUser: "/manager/user-edit/:id",
   articlesAdmin: "/manager/admin/articles",
+  newMagazine: "/manager/admin/add-magazine",
+  magazineAdmin: "/manager/admin/magazine",
 };
 
 export default routes;

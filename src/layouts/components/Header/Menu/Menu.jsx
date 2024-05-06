@@ -27,13 +27,6 @@ function Menu() {
       icon: <FaHeart size={18} className="mr-4 text-rose-500" />,
     },
     {
-      title: "Thêm bài viết",
-      link: () => {
-        navigate(routes.newArticle);
-      },
-      icon: <FaPencilRuler size={18} className="mr-4 text-amber-700" />,
-    },
-    {
       title: "Đăng xuất",
       link: logOut,
       icon: <CiLogout size={18} className="mr-4" />,

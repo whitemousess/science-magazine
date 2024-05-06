@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { FaUserCircle } from "react-icons/fa";
+import HUNRELOGO from "~/assets/HUNRE_Logo.png";
 
 function Avatar({ src, className }) {
   return (
@@ -7,7 +7,7 @@ function Avatar({ src, className }) {
       {src ? (
         <img src={src} alt="avatar" className={className} />
       ) : (
-        <FaUserCircle className={className} />
+        <img src={HUNRELOGO} alt="a" className="w-32 h-32 my-10" />
       )}
     </>
   );

@@ -1,14 +1,16 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import * as userService from "~/services/userService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "~/components/Loading";
+import routes from "~/config/routes";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [token, setToken] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const [role, setRole] = useState(1);
@@ -20,12 +22,12 @@ export const AuthProvider = ({ children }) => {
       .login({ data })
       .then((res) => {
         if (res.data) {
+          navigate(routes.home);
           window.localStorage.setItem("token", res.data.token);
           setCurrentUser(res.data);
           setRole(res.data.role);
           setToken(res.data.token);
           setIsLoading(false);
-          navigate(-1);
         }
       })
       .catch((err) => {
@@ -84,10 +86,10 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser({});
     setToken("");
     setRole(1);
-    window.location.href = "/";
+    navigate(routes.home);
   };
 
-  const isLogged = async () => {
+  const isLogged = useCallback(async () => {
     try {
       setIsLoading(true);
       const Token = await window.localStorage.getItem("token");
@@ -109,11 +111,17 @@ export const AuthProvider = ({ children }) => {
       setRole(0);
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     isLogged();
-  }, []);
+  }, [isLogged]);
+
+  useEffect(() => {
+    if ((role === 0 || role === 3) && location.pathname === routes.home) {
+      navigate(routes.userAdmin);
+    }
+  }, [location, navigate, role]);
 
   if (isLoading) {
     return <Loading />;

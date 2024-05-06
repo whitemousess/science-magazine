@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
-
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <div className="flex justify-center">
-      <Link to={"tel:0328709485"} className="py-4 px-2 hover:bg-neutral-200">Liên hệ</Link>
-      <a className="py-4 px-2">Chính sách bảo mật</a>
-    </div>
+    <footer className="py-4 mt-4">
+      <div className="container mx-auto px-4">
+        <p className="text-center text-gray-600">
+          &copy; {currentYear} Bản quyền của Ngọc Thắng.
+        </p>
+      </div>
+    </footer>
   );
 }
 
