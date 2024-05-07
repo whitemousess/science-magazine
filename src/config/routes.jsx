@@ -21,7 +21,7 @@ const routes = {
   login: "/login",
   register: "/register",
 
-  userAdmin: "/manager/home",
+  userAdmin: "/manager/user",
   actorAdmin: "/manager/actor",
   newActor: "/manager/new-actor",
   editUser: "/manager/user-edit/:id",

@@ -102,7 +102,7 @@ function ArticlesAdmin() {
                   >
                     {item.title}
                   </th>
-                  <td className="px-6 py-4">{item.userId.fullName}</td>
+                  <td className="px-6 py-4 text-nowrap">{item.userId.fullName || "Trường đại học"}</td>
                   <td className="px-6 py-4">{formatTime(item.createdAt)}</td>
                   <td className="px-6 py-4 text-nowrap">
                     {item.status ? "Chưa đăng" : "Đã dăng"}
