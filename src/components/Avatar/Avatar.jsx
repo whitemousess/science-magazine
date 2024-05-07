@@ -7,7 +7,7 @@ function Avatar({ src, className }) {
       {src ? (
         <img src={src} alt="avatar" className={className} />
       ) : (
-        <img src={HUNRELOGO} alt="a" className="w-32 h-32 my-10" />
+        <img src={HUNRELOGO} alt="a" className="w-10 h-10" />
       )}
     </>
   );

@@ -3,33 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
-import ListArticles from "~/components/ListArticles";
-import { getMyArticles } from "~/services/articlesService";
 import Avatar from "~/components/Avatar";
 
 function Profile() {
   const { currentUser, token } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [dataArticles, setDataArticles] = useState([]);
-
-  useEffect(() => {
-    token &&
-      getMyArticles({ page: 1, perPage: 10 })
-        .then((data) => {
-          setDataArticles(data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }, [token, navigate]);
-
-  if (!token) {
-    return;
-  }
 
   return (
-    <>
-      <div className="flex justify-center w-full">
+      <div className="flex justify-center w-full py-10">
         <div className="px-10 flex flex-col items-center justify-center">
           <Avatar
             src={currentUser.imageUrl}
@@ -62,9 +43,6 @@ function Profile() {
           </div>
         </div>
       </div>
-
-      <ListArticles data={dataArticles} />
-    </>
   );
 }
 

@@ -15,6 +15,7 @@ function AddMagazine() {
     type: "",
   });
   const [image, setImage] = useState("");
+  const [imageMagazine, setImageMagazine] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
@@ -107,7 +108,10 @@ function AddMagazine() {
         >
           <option value="">Chọn khoa cho bài tạp chí</option>
           {Commons.selection().typeMagazine.map((item) => (
-            <option value={item.type} key={item.type}>
+            <option
+              value={item.type}
+              key={item.type}
+            >
               {item.title}
             </option>
           ))}

@@ -7,12 +7,20 @@ const SIDEBAR_ADMIN = [
     link: routes.userAdmin,
   },
   {
+    title: "Tác giả",
+    link: routes.actorAdmin,
+  },
+  {
     title: "Trang tạp chí",
     link: routes.magazineAdmin,
   },
   {
-    title: "Bài viết",
+    title: "Bài báo",
     link: routes.articlesAdmin,
+  },
+  {
+    title: "Thêm bài báo",
+    link: routes.addArticleAdmin,
   },
 ];
 

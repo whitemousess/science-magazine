@@ -7,7 +7,9 @@ function DefaultLayout({ children }) {
   return (
     <div>
       <Header />
-      <div className="pt-[82px]">{children}</div>
+      <div className="pt-[100px] flex justify-center">
+        <div className="container shadow-2xl rounded-lg">{children}</div>
+      </div>
       <Footer />
     </div>
   );

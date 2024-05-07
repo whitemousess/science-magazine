@@ -32,10 +32,8 @@ export const getMyFavorite = async ({ page, perPage }) => {
       "favorite/get-my-favorite",
       {
         headers: { Authorization: `Bearer ${token}` },
-      },
-      {
         params: { page, per_Page: perPage },
-      }
+      },
     );
     return res.data;
   } catch (error) {

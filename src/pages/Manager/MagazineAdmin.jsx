@@ -8,6 +8,7 @@ import {
   getAllMagazine,
   deleteMagazine,
 } from "~/services/magazineService";
+import { Commons } from "~/Common/Commons";
 
 function MagazineAdmin() {
   const navigate = useNavigate();
@@ -20,11 +21,6 @@ function MagazineAdmin() {
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
-  };
-
-  const formatTime = (time) => {
-    const date = new Date(time);
-    return date.toLocaleDateString();
   };
 
   const onDelete = () => {
@@ -52,7 +48,7 @@ function MagazineAdmin() {
   const onPublish = (id) => {
     editMagazine({
       id,
-      data: { status: 0, PublishingYear: new Date().getFullYear() },
+      data: { status: 1, publishingYear: new Date() },
     })
       .then(() => fetchData())
       .catch((err) => console.log(err));
@@ -89,7 +85,7 @@ function MagazineAdmin() {
                 Thể loại
               </th>
               <th scope="col" className="px-6 py-3">
-                Năm xuất bản
+                Ngày xuất bản
               </th>
               <th scope="col" className="px-6 py-3">
                 Thời gian đăng
@@ -116,19 +112,23 @@ function MagazineAdmin() {
                   </th>
                   <td className="px-6 py-4">{item.type}</td>
                   <td className="px-6 py-4">
-                    {item.status ? "Chưa xuất bản" : item.PublishingYear}
+                    {item.status
+                      ? Commons.formatTime(item.publishingYear)
+                      : "Chưa xuất bản"}
                   </td>
-                  <td className="px-6 py-4">{formatTime(item.createdAt)}</td>
+                  <td className="px-6 py-4">
+                    {Commons.formatTime(item.createdAt)}
+                  </td>
                   <td className="px-6 py-4">
                     {item.status ? (
+                      "Đã xuất bản"
+                    ) : (
                       <button
                         onClick={() => onPublish(item._id)}
                         className="bg-green-600 text-white px-3 py-2 rounded"
                       >
                         Xuất bản
                       </button>
-                    ) : (
-                      "Đã xuất bản"
                     )}
                   </td>
                   <td className="text-right">

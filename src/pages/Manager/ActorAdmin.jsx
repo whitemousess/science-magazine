@@ -4,9 +4,9 @@ import { Commons } from "~/Common/Commons";
 import Loading from "~/components/Loading";
 import Paginate from "~/components/Paginate";
 
-import { deleteUser, getUser } from "~/services/userService";
+import { deleteUser, getActor } from "~/services/userService";
 
-function UserAdmin() {
+function ActorAdmin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [search, setSearch] = useState("");
@@ -26,7 +26,7 @@ function UserAdmin() {
   };
 
   const fetch = useCallback(() => {
-    getUser({ page: currentPage, perPage: 10, fullName: search })
+    getActor({ page: currentPage, perPage: 10, fullName: search })
       .then((user) => {
         setData(user.data);
         setTotalPage(user.totalPage);
@@ -92,6 +92,7 @@ function UserAdmin() {
                   <td className="px-6 py-4">
                     {item.gender === 0 ? "Nam" : "Nữ"}
                   </td>
+
                   <td className="px-6 py-4">
                     {Commons.formatTime(item.createdAt)}
                   </td>
@@ -131,4 +132,4 @@ function UserAdmin() {
   );
 }
 
-export default UserAdmin;
+export default ActorAdmin;

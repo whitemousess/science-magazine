@@ -15,6 +15,12 @@ function HeaderManager() {
       </Link>
       <div className="flex items-center">
         <Link
+          to={routes.newActor}
+          className="bg-primary text-white px-4 py-2 mr-2 rounded-lg"
+        >
+          Thêm tác giả
+        </Link>
+        <Link
           to={routes.newMagazine}
           className="bg-primary text-white px-4 py-2 mr-2 rounded-lg"
         >

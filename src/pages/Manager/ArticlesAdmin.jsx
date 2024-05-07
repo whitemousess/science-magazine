@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+import { FaEye, FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaCircleCheck } from "react-icons/fa6";
+
 import Paginate from "~/components/Paginate";
-import { deleteArticles, getAllArticles } from "~/services/articlesService";
+import {
+  deleteArticles,
+  editArticles,
+  getAllArticles,
+} from "~/services/articlesService";
 
 function ArticlesAdmin() {
   const [data, setData] = useState([]);
@@ -38,6 +46,14 @@ function ArticlesAdmin() {
       });
   }, [currentPage, search]);
 
+  const onSubmit = ({ id }) => {
+    editArticles({ id, data: { status: 1 } })
+      .then((articles) => {
+        fetchData();
+      })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -56,7 +72,7 @@ function ArticlesAdmin() {
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+          <thead className="text-xs text-gray-700 uppercase text-nowrap bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Tiêu đề
@@ -67,7 +83,10 @@ function ArticlesAdmin() {
               <th scope="col" className="px-6 py-3">
                 Thời gian
               </th>
-              <th scope="col" className="px-6 py-3"></th>
+              <th scope="col" className="px-6 py-3">
+                Trạng thái
+              </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -79,19 +98,47 @@ function ArticlesAdmin() {
                 >
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                    className="px-6 py-4 font-medium text-gray-900 w-full"
                   >
                     {item.title}
                   </th>
                   <td className="px-6 py-4">{item.userId.fullName}</td>
                   <td className="px-6 py-4">{formatTime(item.createdAt)}</td>
+                  <td className="px-6 py-4 text-nowrap">
+                    {item.status ? "Chưa đăng" : "Đã dăng"}
+                  </td>
                   <td className="px-6 py-4 text-right">
-                    <button
-                      className="font-medium text-red-600  hover:underline px-2"
-                      onClick={() => deleteArticle(item._id)}
-                    >
-                      Xóa
-                    </button>
+                    {item.status ? (
+                      <div className="flex">
+                        <Link
+                          to={`/articles/edit/${item._id}`}
+                          className="font-medium text-green-600  hover:underline px-2"
+                        >
+                          <FaEye />
+                        </Link>
+                        <button
+                          className="font-medium text-red-600  hover:underline px-2"
+                          onClick={() => deleteArticle(item._id)}
+                        >
+                          <FaRegTrashAlt />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex">
+                        <button
+                          className="font-medium text-green-600  hover:underline px-2"
+                          onClick={() => onSubmit({ id: item._id })}
+                        >
+                          <FaCircleCheck />
+                        </button>
+                        <button
+                          className="font-medium w-24 text-red-600  hover:underline px-2"
+                          onClick={() => deleteArticle(item._id)}
+                        >
+                          <FaRegTrashAlt />
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))

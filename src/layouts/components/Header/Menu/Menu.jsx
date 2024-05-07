@@ -37,7 +37,7 @@ function Menu() {
 
   return (
     <div className="relative">
-      {role === 1 ? (
+      {role !== 0 ? (
         <div className="cursor-pointer group">
           <Avatar
             src={currentUser.imageUrl}

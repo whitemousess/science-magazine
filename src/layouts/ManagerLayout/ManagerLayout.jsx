@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import SideBar from "../components/SideBar";
 import HeaderManager from "./HeaderManager";
+import { useContext } from "react";
+import { AuthContext } from "~/shared/AuthProvider";
 function ManagerLayout({ children }) {
-  const role = 0;
+  const {role} = useContext(AuthContext);
 
-  if (role > 1) {
+  if (role !== 0) {
     return null;
   }
 

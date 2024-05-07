@@ -68,6 +68,27 @@ export const getUser = async ({ page, perPage, fullName }) => {
   }
 };
 
+
+export const getActor = async ({ page, perPage, fullName }) => {
+  try {
+    const token = await window.localStorage.getItem("token");
+
+    const res = await httpRequest.get(`user/get-actor`, {
+      headers: {
+        authorization: "Bearer " + token,
+      },
+      params: {
+        page,
+        per_page: perPage,
+        fullName,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const editUser = async ({ id, data }) => {
   try {
     const token = await window.localStorage.getItem("token");

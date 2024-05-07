@@ -1,7 +1,7 @@
-function EmptyClient() {
+function EmptyClient({ title }) {
   return (
     <div className="py-10 flex justify-center items-center font-bold">
-      Không có dữ liệu
+      {title || "Không có dữ liệu"}
     </div>
   );
 }

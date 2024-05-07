@@ -1,26 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import routes from "~/config/routes";
-import ListArticles from "~/components/ListArticles";
-import { getAllArticles } from "~/services/articlesService";
 import Logo from "~/assets/Logo.png";
+import IssueNumber from "../IssueNumber";
 
 function Home() {
-  const [dataArticles, setDataArticles] = useState([]);
-
-  const fetchData = useCallback(() => {
-    getAllArticles({ page: 1, perPage: 5 })
-      .then((data) => setDataArticles(data.data))
-      .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
   return (
-    <>
+    <div className="flex flex-col">
       <div className="py-10 md:px-32 px-10 md:flex items-center w-full border-b bg-gradient-to-br to-primary from-green-100">
         <div className="md:w-1/2">
           <strong>Khám phá những điều kỳ diệu của khoa học</strong>
@@ -39,17 +25,19 @@ function Home() {
         </div>
       </div>
 
-      <ListArticles data={dataArticles} />
+      <div className="my-4">
+        <IssueNumber />
+      </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-4">
         <Link
-          to={routes.articles}
+          to={routes.issueNumber}
           className="border px-4 py-2 rounded-xl hover:bg-primary hover:text-white hover:font-medium"
         >
           Xem thêm
         </Link>
       </div>
-    </>
+    </div>
   );
 }
 

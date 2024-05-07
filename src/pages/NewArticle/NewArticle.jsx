@@ -7,7 +7,8 @@ import ImageResize from "quill-image-resize-module-react";
 import TextInput from "~/components/TextInput";
 import { newArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
-import { getAllMagazine } from "~/services/magazineService";
+import { getMagazineUnpublished } from "~/services/magazineService";
+import EmptyClient from "~/components/EmptyClient";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -25,9 +26,10 @@ function NewArticle() {
     formData.append("title", data.title);
     formData.append("description", description);
     formData.append("imageUrl", data.imageUrl);
+    formData.append("magazineId", data.magazineId);
 
     await newArticles({ data: formData })
-      .then(() => {
+      .then((a) => {
         alert("Thêm mới thành công");
         setIsLoading(false);
       })
@@ -77,9 +79,12 @@ function NewArticle() {
   };
 
   useEffect(() => {
-    getAllMagazine({})
+    getMagazineUnpublished({})
       .then((magazine) => {
         setSelectMagazine(magazine.data);
+        if (magazine.data > 0) {
+          setData({ ...data, magazineId: magazine.data[0]._id });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -90,65 +95,76 @@ function NewArticle() {
     return;
   }
   return (
-    <div className="px-10">
-      {showImage && (
-        <img
-          src={showImage}
-          alt=""
-          className="rounded-lg w-[300px] h-auto mb-2"
-        />
-      )}
-      <TextInput
-        type="text"
-        title={"title"}
-        value={data.title}
-        name={"title"}
-        onChange={onChange}
-      />
+    <div className="px-10 w-full">
+      {selectMagazine.length > 0 ? (
+        <>
+          <div className="flex justify-center items-center">
+            <div>
+              <p className="mt-4 text-center">Số xuất bản tiếp theo</p>
+              <img
+                src={selectMagazine[0]?.imageUrl}
+                alt=""
+                className="w-56 my-4"
+              />
+              <p>{selectMagazine[0]?.title}</p>
+            </div>
+            {showImage && (
+              <img
+                src={showImage}
+                alt=""
+                className="rounded-lg  w-auto h-56 m-4"
+              />
+            )}
+          </div>
 
-      <div className="flex flex-col mb-4">
-        <label
-          className="my-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
-          htmlFor="file_image"
-        >
-          Upload image
-        </label>
+          <TextInput
+            type="text"
+            title={"title"}
+            value={data.title}
+            name={"title"}
+            onChange={onChange}
+          />
 
-        <ReactQuill
-          theme="snow"
-          value={description}
-          onChange={setDescription}
-          modules={modules}
-        />
-        
-        <select name="magazineId" onChange={onChange} required className="border mt-2 py-3 px-2 rounded">
-          <option value="">Chọn chuyên mục</option>
-          {selectMagazine.map((magazine) => (
-            <option key={magazine._id} value={magazine._id}>
-              {magazine.title}
-            </option>
-          ))}
-        </select>
+          <div className="flex flex-col mb-4">
+            <label
+              className="my-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
+              htmlFor="file_image"
+            >
+              Tải ảnh
+            </label>
 
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={setDescription}
+              modules={modules}
+            />
+
+            <div>
+              <button
+                className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+                onClick={() => (isLoading ? null : addArticle())}
+              >
+                {isLoading ? "Đang đăng ..." : "Đăng bài"}
+              </button>
+            </div>
+
+            <input
+              className="opacity-0 h-0"
+              id="file_image"
+              name="imageUrl"
+              required
+              type="file"
+              accept="image/*"
+              onChange={onChangImages}
+            />
+          </div>
+        </>
+      ) : (
         <div>
-          <button
-            className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-            onClick={() => (isLoading ? null : addArticle())}
-          >
-            {isLoading ? "Đang đăng ..." : "Đăng bài"}
-          </button>
+          <EmptyClient title={"Không còn tạp chí nào để đăng bài"}/>
         </div>
-
-        <input
-          className="opacity-0 h-0"
-          id="file_image"
-          name="imageUrl"
-          required
-          type="file"
-          accept="image/*"
-          onChange={onChangImages}
-        />
-      </div>
+      )}
     </div>
   );
 }

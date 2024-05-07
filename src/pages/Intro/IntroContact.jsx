@@ -1,7 +1,7 @@
 function IntroContact() {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <header className="bg-white py-4">
+      <header className="py-4">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold text-center">
             Liên hệ đăng tạp chí

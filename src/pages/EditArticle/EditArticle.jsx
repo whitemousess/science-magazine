@@ -2,17 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
-import Quill from 'quill';
-import ImageResize from 'quill-image-resize-module-react';
+import Quill from "quill";
+import ImageResize from "quill-image-resize-module-react";
 
 import TextInput from "~/components/TextInput";
 import { editArticles, getDetailArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
 
-Quill.register('modules/imageResize', ImageResize);
+Quill.register("modules/imageResize", ImageResize);
 
 function EditArticle() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(AuthContext);
   const [data, setData] = useState({ title: "", imageUrl: "" });
@@ -31,7 +31,7 @@ function EditArticle() {
       .then(() => {
         alert("Sửa thành công");
         setIsLoading(false);
-        navigate(-1)
+        navigate(-1);
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +42,7 @@ function EditArticle() {
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, false] }],
-      ["bold", "italic", "underline",],
+      ["bold", "italic", "underline"],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -55,12 +55,12 @@ function EditArticle() {
         { align: "right" },
         { align: "justify" },
       ],
-      ['size', "link", "image"],
+      ["size", "link", "image"],
     ],
     imageResize: {
-      parchment: Quill.import('parchment'),
-      modules: ['Resize', 'DisplaySize']
-    }
+      parchment: Quill.import("parchment"),
+      modules: ["Resize", "DisplaySize"],
+    },
   };
 
   const onChange = (e) => {

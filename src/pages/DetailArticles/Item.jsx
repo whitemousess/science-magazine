@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import "react-quill/dist/quill.snow.css";
 import { CiChat1 } from "react-icons/ci";
 import { AiFillLike } from "react-icons/ai";
-import { IoMdMore } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
+import { BiLike } from "react-icons/bi";
 
 import { AuthContext } from "~/shared/AuthProvider";
 import { searchFavorite } from "~/services/favoriteService";
 import Comment from "./Comment";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "~/components/Avatar";
 import Modal from "~/components/Modal";
 import routes from "~/config/routes";
@@ -38,7 +38,7 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
   }, [id, token]);
 
   return (
-    <>
+    <div>
       <div className="text-center font-bold text-2xl py-10 border-b">
         <p className="text-2xl font-bold">{data.title}</p>
         <div className="flex justify-center mt-4">
@@ -59,27 +59,11 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
           />
           <p className="ml-2 font-medium">{data?.userId?.fullName}</p>
         </div>
-        {data?.userId?._id === currentUser?._id && (
-          <div className="group relative">
-            <IoMdMore className="p-2 cursor-pointer" size={40} />
-            <div className="w-[150px] text-center hidden group-hover:block absolute rounded-lg overflow-hidden right-0 bg-slate-100 ">
-              <div
-                className="px-4 py-1 hover:bg-slate-200 cursor-pointer"
-                onClick={() => setShowModal(true)}
-              >
-                Xóa bài viết
-              </div>
-              <Link to={`/articles/edit/${data._id}`}>
-                <div className="px-4 py-1 hover:bg-slate-200 cursor-pointer">
-                  Sửa bài viết
-                </div>
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
       <div className="ql-editor xl:px-[340px] sm:px-[100px] px-10">
-        <div dangerouslySetInnerHTML={{ __html: data.description?.description }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: data.description?.description }}
+        />
       </div>
 
       <div className="flex select-none mt-4 border-t border-b">
@@ -89,7 +73,11 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
           } hover:bg-slate-300 cursor-pointer rounded`}
           onClick={handleLike}
         >
-          <AiFillLike size={20} className={`m-2`} />
+          {!isFavorite ? (
+            <BiLike size={20} className={`m-2`} />
+          ) : (
+            <AiFillLike size={20} className={`m-2`} />
+          )}
           <p className="text-lg">Thích</p>
         </div>
 
@@ -108,7 +96,7 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
         onSubmit={() => deleteArticle(data._id)}
         description="Bạn có chắc muốn xóa"
       />
-    </>
+    </div>
   );
 }
 

@@ -54,6 +54,21 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
+  const addActor = (data) => {
+    userService
+      .Register({ data })
+      .then((res) => {
+        if (res.data) {
+          navigate(-1);
+        } else if (res.response.data.error.keyPattern.username) {
+          alert("Tài khoản đã tồn tại");
+        } else if (res.response.data.error.keyPattern.email) {
+          alert("Email đã tồn tại");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const editProfile = async (data) => {
     if (data.password !== data.rePassword) alert("Mật khẩu không trùng khớp");
     const formData = new FormData();
@@ -137,6 +152,7 @@ export const AuthProvider = ({ children }) => {
         logOut,
         register,
         editProfile,
+        addActor,
       }}
     >
       {children}

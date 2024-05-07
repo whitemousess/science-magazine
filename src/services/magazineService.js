@@ -12,15 +12,48 @@ export const addMagazine = async ({ data }) => {
   }
 };
 
-export const getAllMagazine = async ({ page, perPage, title }) => {
+export const getAllMagazine = async ({ page, perPage, title, type }) => {
   try {
     const res = await httpRequest.get(`magazine/get-all-magazine`, {
       params: {
         title,
         page,
         per_page: perPage,
+        type,
       },
     });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMagazinePublish = async ({
+  page,
+  perPage,
+  title,
+  type,
+  publishingYear,
+}) => {
+  try {
+    const res = await httpRequest.get(`magazine/get-magazine/publish`, {
+      params: {
+        type,
+        page,
+        title,
+        publishingYear,
+        per_page: perPage,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMagazineUnpublished = async () => {
+  try {
+    const res = await httpRequest.get(`magazine/get-magazine/unpublished`);
     return res.data;
   } catch (error) {
     return error;
@@ -47,7 +80,7 @@ export const editMagazine = async ({ data, id }) => {
   }
 };
 
-export const deleteMagazine = async ({id}) => {
+export const deleteMagazine = async ({ id }) => {
   try {
     const res = await httpRequest.delete(`magazine/delete-magazine/${id}`, {
       headers: { authorization: "Bearer " + localStorage.token },

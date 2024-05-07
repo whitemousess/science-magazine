@@ -13,21 +13,11 @@ function Header() {
   const MENU_HEADER = [
     {
       title: "Trang chủ",
-      link: () => {
-        navigate(routes.home);
-      },
+      link: routes.home,
     },
     {
-      title: "Tổng hợp số phát hành",
-      link: () => {
-        navigate(routes.home);
-      },
-    },
-    {
-      title: "Yêu cầu đăng bài",
-      link: () => {
-        navigate(token ? routes.newArticle : routes.login);
-      },
+      title: "Số phát hành",
+      link: routes.issueNumber,
     },
     {
       title: "Giới thiệu",
@@ -49,18 +39,20 @@ function Header() {
   ];
 
   return (
-    <div
-      className={`py-4 px-10 min-w-full flex md:justify-between justify-end z-50 items-center bg-white fixed`}
+    <header
+      className={`py-4 bg-primary  px-10 min-w-full flex md:justify-between justify-end z-50 items-center fixed`}
     >
-      <div className="flex">
+      <div className="flex ">
         {MENU_HEADER.map((item) => (
           <div className="relative  group" key={item.title}>
-            <button
-              onClick={item.link}
-              className={`p-2 md:block hidden hover:text-primary`}
+            <Link
+              to={item.link}
+              className={`p-2 md:block hidden hover:underline text-white ${
+                location.pathname === item.link && "underline"
+              }`}
             >
               {item.title}
-            </button>
+            </Link>
 
             {item.arrayMenu && (
               <div className="absolute w-[170px] shadow bg-white hidden group-hover:block">
@@ -91,13 +83,13 @@ function Header() {
           </Link>
           <Link
             to={routes.register}
-            className="border font-medium px-4 py-2 rounded-lg "
+            className="border font-medium px-4 py-2 rounded-lg bg-white hover:shadow-inner hover:shadow-black/30"
           >
             Đăng ký
           </Link>
         </div>
       )}
-    </div>
+    </header>
   );
 }
 
