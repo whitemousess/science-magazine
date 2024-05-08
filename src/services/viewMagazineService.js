@@ -16,3 +16,13 @@ export const addViewMagazine = async ({ data }) => {
     return error;
   }
 };
+
+export const getTopView = async () => {
+  try {
+    const res = await httpRequest.get(`view-magazine/top-view`);
+
+    return res;
+  } catch (error) {
+    return error;
+  }
+};

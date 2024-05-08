@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CiDatabase } from "react-icons/ci";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Commons } from "~/Common/Commons";
+import BarChartHome from "~/components/BarChartHome";
 import Paginate from "~/components/Paginate";
 import routes from "~/config/routes";
 import { getTopArticle } from "~/services/articlesService";
@@ -106,7 +107,7 @@ function IssueNumber() {
                 </div>
               ))
             ) : (
-              <p className="text-red-500 text-center">Chưa có tạp chí nào</p>
+              <p className="text-red-500 text-center">Chưa có bài báo nào</p>
             )}
           </div>
 
@@ -138,6 +139,8 @@ function IssueNumber() {
               <p className="text-red-500 text-center">Chưa có Tác giả</p>
             )}
           </div>
+          
+          <BarChartHome />
         </div>
       </div>
 
@@ -158,6 +161,7 @@ function IssueNumber() {
                   )} tháng ${Commons.formatTimeMonth(
                     item.publishingYear
                   )} năm ${Commons.formatTimeYear(item.publishingYear)}`}</p>
+                  <p>Bản phát hành số : {item.versionPublish}</p>
                   <p className="absolute bottom-0">
                     Được xuất bản bởi trường đại học ...
                   </p>

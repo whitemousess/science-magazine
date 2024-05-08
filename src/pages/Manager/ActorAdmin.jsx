@@ -5,7 +5,7 @@ import Loading from "~/components/Loading";
 import Paginate from "~/components/Paginate";
 import routes from "~/config/routes";
 
-import { deleteUser, getActor } from "~/services/userService";
+import { deleteActor, getActor } from "~/services/userService";
 
 function ActorAdmin() {
   const navigate = useNavigate();
@@ -18,10 +18,12 @@ function ActorAdmin() {
     setCurrentPage(selectedPage.selected + 1);
   };
 
-  const deleteUserAdmin = (id) => {
-    deleteUser({ id })
+  const deleteActorAdmin = (id) => {
+    deleteActor({ id })
       .then((item) => {
-        console.log(item);
+        if (item.message) {
+          alert(item.message);
+        }
         fetch();
       })
       .catch((error) => console.log(error));
@@ -137,7 +139,7 @@ function ActorAdmin() {
                       Sửa
                     </button>
                     <button
-                      onClick={() => deleteUserAdmin(item._id)}
+                      onClick={() => deleteActorAdmin(item._id)}
                       className="font-medium text-red-600 hover:underline px-2"
                     >
                       Xóa
@@ -147,7 +149,7 @@ function ActorAdmin() {
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="text-center py-4">
+                <td colSpan={10} className="text-center py-4">
                   Không có dữ liệu
                 </td>
               </tr>

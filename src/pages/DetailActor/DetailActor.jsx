@@ -131,7 +131,7 @@ function DetailActor() {
           ) : (
             <div className="flex flex-col justify-center items-center h-full">
               <CiDatabase size={100} />
-              <p className="">Chưa có tạp chí nào?</p>
+              <p className="">Chưa có bài báo nào?</p>
             </div>
           )}
           <Paginate

@@ -89,7 +89,7 @@ function DetailMagazine() {
             <Link
               to={`/articles/${item._id}`}
               key={item._id}
-              className="flex bg-white rounded-xl"
+              className="flex bg-white rounded-xl overflow-hidden  mb-4"
             >
               <img src={item.imageUrl} alt={item.title} className="h-40" />
               <div className="m-4 relative w-full">
@@ -108,7 +108,7 @@ function DetailMagazine() {
         ) : (
           <div className="flex mb-[415px] flex-col justify-center items-center h-full">
             <CiDatabase size={100} />
-            <p className="">Chưa có tạp chí nào?</p>
+            <p className="">Chưa có bài báo nào?</p>
           </div>
         )}
         <Paginate

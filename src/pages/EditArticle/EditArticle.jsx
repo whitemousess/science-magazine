@@ -81,9 +81,9 @@ function EditArticle() {
   useEffect(() => {
     getDetailArticles({ id })
       .then((article) => {
-        setData(article.data);
-        setDescription(article.data.description.description);
-        setShowImage(article.data.imageUrl);
+        setData(article);
+        setDescription(article.descriptionId.description);
+        setShowImage(article.imageUrl);
       })
       .catch((error) => {
         console.log(error);
@@ -128,7 +128,9 @@ function EditArticle() {
 
         <div>
           <button
-            className="bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+            className={`${
+              isLoading && "cursor-wait"
+            } bg-primary mt-4 text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
             onClick={() => (isLoading ? null : addArticle())}
           >
             {isLoading ? "Đang sửa ..." : "Sửa thông tin"}

@@ -126,3 +126,17 @@ export const deleteUser = async ({ id }) => {
     return error;
   }
 };
+
+export const deleteActor = async ({ id }) => {
+  try {
+    const token = await window.localStorage.getItem("token");
+    const res = await httpRequest.delete(`user/delete/actor/${id}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

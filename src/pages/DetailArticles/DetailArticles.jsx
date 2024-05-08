@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { deleteArticles, getDetailArticles } from "~/services/articlesService";
+import { getDetailArticles } from "~/services/articlesService";
 import Item from "./Item";
 import { addFavorite, removeFavorite } from "~/services/favoriteService";
 
 function DetailArticles() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [data, setData] = useState({});
 
   const liked = (id) => {
@@ -22,33 +21,18 @@ function DetailArticles() {
       .catch((error) => console.log(error));
   };
 
-  const deleteArticle = (id) => {
-    deleteArticles({ id }).then(() => {
-      alert("Delete article");
-      navigate(-1);
-    });
-  };
-
   const fetchData = useCallback(
     () =>
       getDetailArticles({ id })
-        .then((articles) => setData(articles.data))
+        .then((articles) => setData(articles))
         .catch((err) => console.log(err)),
     [id]
   );
-
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  return (
-      <Item
-        data={data}
-        liked={liked}
-        removeLiked={removeLiked}
-        deleteArticle={deleteArticle}
-      />
-  );
+  return <Item data={data} liked={liked} removeLiked={removeLiked} />;
 }
 
 export default DetailArticles;

@@ -5,10 +5,13 @@ import { useContext, useEffect } from "react";
 import Footer from "~/layouts/components/Footer";
 import Header from "~/layouts/components/Header";
 import { AuthContext } from "~/shared/AuthProvider";
-import HUNRE_LOGO from '~/assets/HUNRE_Logo.png'
+import HUNRE_LOGO from "~/assets/HUNRE_Logo.png";
+import { useNavigate } from "react-router-dom";
+import routes from "~/config/routes";
 
 function DefaultLayout({ children }) {
   const { token, role } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token && role !== 0) {
@@ -19,11 +22,14 @@ function DefaultLayout({ children }) {
       const channel = pusher.subscribe("notification");
 
       channel.bind("listen-notification", (message) => {
-        console.log(message);
-        new Notification("Thông báo mới!", {
+        const notification = new Notification("Thông báo mới!", {
           body: "Có tạp chí mới được nhà trường xuất bản.",
           icon: HUNRE_LOGO,
         });
+        notification.onclick = function (event) {
+          event.preventDefault(); // Prevents the browser from focusing the Notification's related tab
+          navigate(routes.issueNumber); // Opens a new tab with the specified URL
+        };
       });
       return () => {
         channel.unbind_all();

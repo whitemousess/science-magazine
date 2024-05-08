@@ -15,6 +15,7 @@ import {
   MagazineAdmin,
   AddActor,
   ActorAdmin,
+  Dashboard,
 } from "~/pages/Manager";
 import Profile from "~/pages/Profile";
 import Favorites from "~/pages/Favorites";
@@ -46,6 +47,11 @@ const publicRoutes = [
   { path: config.routes.login, component: Login, Layout: null },
   { path: config.routes.register, component: Register, Layout: null },
 
+  {
+    path: config.routes.dashboard,
+    component: Dashboard,
+    Layout: ManagerLayout,
+  },
   {
     path: config.routes.userAdmin,
     component: UserAdmin,

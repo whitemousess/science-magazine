@@ -10,15 +10,13 @@ import { searchFavorite } from "~/services/favoriteService";
 import Comment from "./Comment";
 import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "~/components/Avatar";
-import Modal from "~/components/Modal";
 import routes from "~/config/routes";
 
-function Item({ data, liked, removeLiked, deleteArticle }) {
+function Item({ data, liked, removeLiked }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleLike = () => {
     if (token) {
@@ -57,12 +55,12 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
             alt="avatar"
             className="w-[42px] h-[42px] rounded-full"
           />
-          <p className="ml-2 font-medium">{data?.userId?.fullName}</p>
+          <p className="ml-2 font-medium">{data?.userId?.fullName || "Trường Đại học Tài nguyên và Môi trường Hà Nội "}</p>
         </div>
       </div>
       <div className="ql-editor xl:px-[340px] sm:px-[100px] px-10">
         <div
-          dangerouslySetInnerHTML={{ __html: data.description?.description }}
+          dangerouslySetInnerHTML={{ __html: data.descriptionId?.description }}
         />
       </div>
 
@@ -88,14 +86,6 @@ function Item({ data, liked, removeLiked, deleteArticle }) {
       </div>
 
       <Comment />
-
-      <Modal
-        showModal={showModal}
-        title="Bạn có chắc muốn xóa"
-        onClose={() => setShowModal(false)}
-        onSubmit={() => deleteArticle(data._id)}
-        description="Bạn có chắc muốn xóa"
-      />
     </div>
   );
 }
@@ -104,7 +94,6 @@ Item.propTypes = {
   data: PropTypes.object.isRequired,
   liked: PropTypes.func,
   removeLiked: PropTypes.func,
-  deleteArticle: PropTypes.func,
 };
 
 export default Item;

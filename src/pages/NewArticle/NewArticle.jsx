@@ -9,12 +9,14 @@ import { newArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
 import { getMagazineUnpublished } from "~/services/magazineService";
 import EmptyClient from "~/components/EmptyClient";
+import { useNavigate } from "react-router-dom";
 
 Quill.register("modules/imageResize", ImageResize);
 
 function NewArticle() {
   const { token } = useContext(AuthContext);
-  const [data, setData] = useState({ title: "", imageUrl: "", magazineId: "" });
+  const navigate = useNavigate();
+  const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,12 +28,14 @@ function NewArticle() {
     formData.append("title", data.title);
     formData.append("description", description);
     formData.append("imageUrl", data.imageUrl);
-    formData.append("magazineId", data.magazineId);
+    formData.append("magazineId", selectMagazine[0]?._id);
 
     await newArticles({ data: formData })
       .then((a) => {
+        console.log(a);
         alert("Thêm mới thành công");
         setIsLoading(false);
+        navigate(-1);
       })
       .catch((err) => {
         console.log(err);
@@ -82,9 +86,6 @@ function NewArticle() {
     getMagazineUnpublished({})
       .then((magazine) => {
         setSelectMagazine(magazine.data);
-        if (magazine.data > 0) {
-          setData({ ...data, magazineId: magazine.data[0]._id });
-        }
       })
       .catch((error) => {
         console.log(error);
@@ -99,7 +100,7 @@ function NewArticle() {
       {selectMagazine.length > 0 ? (
         <>
           <div className="flex justify-center items-center">
-            <div>
+            <div className="flex flex-col justify-center items-center">
               <p className="mt-4 text-center">Số xuất bản tiếp theo</p>
               <img
                 src={selectMagazine[0]?.imageUrl}
@@ -162,7 +163,7 @@ function NewArticle() {
         </>
       ) : (
         <div>
-          <EmptyClient title={"Không còn tạp chí nào để đăng bài"}/>
+          <EmptyClient title={"Không còn tạp chí nào để đăng bài"} />
         </div>
       )}
     </div>

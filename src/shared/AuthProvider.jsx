@@ -163,7 +163,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if ((role === 0 || role === 3) && location.pathname === routes.home) {
-      navigate(routes.userAdmin);
+      navigate(routes.dashboard);
     }
   }, [location, navigate, role]);
 

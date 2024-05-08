@@ -81,6 +81,9 @@ function ArticlesAdmin() {
                 Người đăng
               </th>
               <th scope="col" className="px-6 py-3">
+                Tạp chí số
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Thời gian
               </th>
               <th scope="col" className="px-6 py-3">
@@ -98,53 +101,49 @@ function ArticlesAdmin() {
                 >
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 w-full"
+                    className="px-6 py-4 font-medium text-gray-900 max-w-full"
                   >
                     {item.title}
                   </th>
-                  <td className="px-6 py-4 text-nowrap">{item.userId.fullName || "Trường đại học"}</td>
+                  <td className="px-6 py-4 text-nowrap">
+                    {item.userId.fullName || "Trường đại học"}
+                  </td>
+                  <td className="px-6 py-4 text-nowrap">
+                    {item.magazineId.versionPublish || "Chưa xuất bản"}
+                  </td>
                   <td className="px-6 py-4">{formatTime(item.createdAt)}</td>
                   <td className="px-6 py-4 text-nowrap">
-                    {item.status ? "Chưa đăng" : "Đã dăng"}
+                    {item.status ? "Đã dăng" : "Chưa đăng"}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    {item.status ? (
-                      <div className="flex">
-                        <Link
-                          to={`/articles/edit/${item._id}`}
-                          className="font-medium text-green-600  hover:underline px-2"
-                        >
-                          <FaEye />
-                        </Link>
-                        <button
-                          className="font-medium text-red-600  hover:underline px-2"
-                          onClick={() => deleteArticle(item._id)}
-                        >
-                          <FaRegTrashAlt />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex">
+                    <div className="flex">
+                      <Link
+                        to={`/articles/edit/${item._id}`}
+                        className="font-medium text-green-600  hover:underline px-2"
+                      >
+                        <FaEye />
+                      </Link>
+                      {!item.status && (
                         <button
                           className="font-medium text-green-600  hover:underline px-2"
                           onClick={() => onSubmit({ id: item._id })}
                         >
                           <FaCircleCheck />
                         </button>
-                        <button
-                          className="font-medium w-24 text-red-600  hover:underline px-2"
-                          onClick={() => deleteArticle(item._id)}
-                        >
-                          <FaRegTrashAlt />
-                        </button>
-                      </div>
-                    )}
+                      )}
+                      <button
+                        className="font-medium text-red-600  hover:underline px-2"
+                        onClick={() => deleteArticle(item._id)}
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="text-center py-4">
+                <td colSpan={6} className="text-center py-4">
                   Không có dữ liệu
                 </td>
               </tr>
