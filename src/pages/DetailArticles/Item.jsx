@@ -16,7 +16,7 @@ import routes from "~/config/routes";
 function Item({ data, liked, removeLiked, deleteArticle }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token, currentUser } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
 

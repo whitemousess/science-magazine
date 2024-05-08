@@ -19,6 +19,17 @@ export const Register = ({ data }) => {
   }
 };
 
+export const addActor = async ({ data }) => {
+  try {
+    const res = httpRequest.post("user/add-actor", data, {
+      headers: { Authorization: "Bearer " + localStorage.token },
+    });
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getCurrentUser = async () => {
   try {
     const token = await window.localStorage.getItem("token");
@@ -67,7 +78,6 @@ export const getUser = async ({ page, perPage, fullName }) => {
     return error;
   }
 };
-
 
 export const getActor = async ({ page, perPage, fullName }) => {
   try {

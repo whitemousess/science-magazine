@@ -24,7 +24,6 @@ function Home() {
           />
         </div>
       </div>
-
       <div className="my-4">
         <IssueNumber />
       </div>

@@ -54,16 +54,38 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
-  const addActor = (data) => {
-    userService
-      .Register({ data })
+  const addActor = async (data) => {
+    if (data.password !== data.rePassword) alert("Mật khẩu không trùng khớp");
+    const formData = new FormData();
+    
+    formData.append("username", data.username);
+    formData.append("password", data.password);
+    formData.append("fullName", data.fullName);
+    formData.append("email", data.email);
+    formData.append("address", data.address);
+    formData.append("phone", data.phone);
+    formData.append("gender", data.gender);
+    formData.append("role", data.role);
+    formData.append("province", data.province);
+    formData.append("districts", data.districts);
+    formData.append("phone", data.phone);
+    formData.append("biography", data.biography);
+    formData.append("education", data.education);
+    formData.append("academic_degree", data.academic_degree);
+    formData.append("dob", data.dob);
+    formData.append("imageUrl", data.imageUrl);
+
+    await userService
+      .addActor({ data: formData })
       .then((res) => {
         if (res.data) {
-          navigate(-1);
-        } else if (res.response.data.error.keyPattern.username) {
-          alert("Tài khoản đã tồn tại");
+          alert("Thay đổi thành công");
+          setCurrentUser(res.data);
+          navigate(routes.actorAdmin);
         } else if (res.response.data.error.keyPattern.email) {
           alert("Email đã tồn tại");
+        }else if (res.response.data.error.keyPattern.username) {
+          alert("Tài khoản đã tồn tại");
         }
       })
       .catch((err) => console.log(err));
@@ -78,6 +100,13 @@ export const AuthProvider = ({ children }) => {
     formData.append("address", data.address);
     formData.append("phone", data.phone);
     formData.append("gender", data.gender);
+    formData.append("role", data.role);
+    formData.append("province", data.province);
+    formData.append("districts", data.districts);
+    formData.append("biography", data.biography);
+    formData.append("education", data.education);
+    formData.append("academic_degree", data.academic_degree);
+    formData.append("dob", data.dob);
     {
       data.imageUrl && formData.append("imageUrl", data.imageUrl);
     }

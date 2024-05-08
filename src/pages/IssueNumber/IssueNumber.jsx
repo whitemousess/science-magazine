@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { CiDatabase } from "react-icons/ci";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Commons } from "~/Common/Commons";
 import Paginate from "~/components/Paginate";
 import routes from "~/config/routes";
 import { getTopArticle } from "~/services/articlesService";
 import { getMagazinePublish } from "~/services/magazineService";
+import { getActor } from "~/services/userService";
+import { addViewMagazine } from "~/services/viewMagazineService";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function IssueNumber() {
   const { token, role } = useContext(AuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [totalPage, setTotalPage] = useState(0);
@@ -19,9 +22,19 @@ function IssueNumber() {
   const [publishingYear, setPublishingYear] = useState("");
   const [newsMagazine, setNewMagazine] = useState({});
   const [topArticle, setTopArticle] = useState([]);
+  const [actor, setActor] = useState([]);
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
+  };
+
+  const addHistory = (item) => {
+    if (token && role !== 0) {
+      addViewMagazine({ data: item._id })
+        .then((history) => console.log(history))
+        .catch((error) => console.log(error));
+    }
+    navigate(`/magazine/${item._id}`);
   };
 
   useEffect(() => {
@@ -48,19 +61,23 @@ function IssueNumber() {
         setNewMagazine(magazine.data[0]);
       })
       .catch((err) => console.error(err));
-  }, []);
 
-  useEffect(() => {
     getTopArticle()
       .then((article) => {
         setTopArticle(article);
+      })
+      .catch((err) => console.log(err));
+
+    getActor({})
+      .then((actor) => {
+        setActor(actor.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className="flex py-4">
-      <div className="w-2/6 px-6 ">
+      <div className="w-4/12 px-6 ">
         <div className="bg-gray-100 p-4 h-full rounded-xl shadow-black/15 shadow-inner">
           <div className="w-full border bg-white rounded-xl overflow-hidden pt-2">
             <p className="text-center mb-2">Số tạp chí mới nhất</p>
@@ -92,16 +109,45 @@ function IssueNumber() {
               <p className="text-red-500 text-center">Chưa có tạp chí nào</p>
             )}
           </div>
+
+          <div className="w-full border bg-white rounded-xl mt-4 overflow-hidden  pt-2">
+            <p className="text-center mb-2">Tất cả tác giả</p>
+
+            {actor.length > 0 ? (
+              actor.map((item) => (
+                <div className="m-4" key={item._id}>
+                  <Link
+                    to={`/actor/${item._id}`}
+                    className="flex h-[100px] border rounded overflow-hidden group pr-1 hover:shadow-black/20 shadow-inner"
+                  >
+                    <img
+                      src={item.imageUrl}
+                      alt={item.fullName}
+                      className="w-[100px] h-[100px] object-cover mr-2"
+                    />
+                    <div className="py-1">
+                      <p className="group-hover:underline group-hover:text-blue-900 ">
+                        {item.academic_degree}.{item.fullName}
+                      </p>
+                      <p className="">{item.education}</p>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p className="text-red-500 text-center">Chưa có Tác giả</p>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="w-3/6 px-4 border-l border-r rounded-xl bg-gray-100 py-4 shadow-black/15 shadow-inner">
+      <div className="w-5/12 px-4 border-l border-r rounded-xl bg-gray-100 py-4 shadow-black/15 shadow-inner">
         {data.length > 0 ? (
           <div>
             {data.map((item) => (
-              <Link
-                to={`/magazine/${item._id}`}
-                className="flex bg-white rounded-xl overflow-hidden mb-4"
+              <div
+                onClick={() => addHistory(item)}
+                className="flex bg-white rounded-xl mb-4 cursor-pointer"
                 key={item._id}
               >
                 <img src={item.imageUrl} alt="" className="w-48 h-auto" />
@@ -116,7 +162,7 @@ function IssueNumber() {
                     Được xuất bản bởi trường đại học ...
                   </p>
                 </div>
-              </Link>
+              </div>
             ))}
 
             {location.pathname !== routes.home && (
@@ -135,7 +181,7 @@ function IssueNumber() {
         )}
       </div>
 
-      <div className="w-1/6 px-10 sticky top-[90px] h-full">
+      <div className="w-3/12 px-10 sticky top-[90px] h-full">
         <div className="bg-gray-50 p-4 h-full rounded-xl shadow-black/15 shadow-inner">
           <input
             type="search"

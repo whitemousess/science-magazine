@@ -44,7 +44,7 @@ function Header() {
     >
       <div className="flex ">
         {MENU_HEADER.map((item) => (
-          <div className="relative  group" key={item.title}>
+          <div className="relative group" key={item.title}>
             <Link
               to={item.link}
               className={`p-2 md:block hidden hover:underline text-white ${
@@ -55,7 +55,7 @@ function Header() {
             </Link>
 
             {item.arrayMenu && (
-              <div className="absolute w-[170px] shadow bg-white hidden group-hover:block">
+              <div className="absolute rounded-lg overflow-hidden w-[170px] shadow bg-white hidden group-hover:block">
                 {item.arrayMenu.map((array) => (
                   <button
                     onClick={() => navigate(array.link)}

@@ -12,6 +12,7 @@ function Register() {
     rePassword: "",
     fullName: "",
     email: "",
+    phone: "",
     gender: 0,
   });
 
@@ -25,7 +26,7 @@ function Register() {
     e.preventDefault();
     register(data);
   };
-  
+
   return (
     <div className="h-[100vh] flex justify-center items-center bg-neutral-100">
       <form
@@ -83,6 +84,15 @@ function Register() {
             onChange={onChange}
           />
 
+          <TextInput
+            required={true}
+            type="number"
+            title={"Số điện thoại"}
+            value={data.phone}
+            name={"phone"}
+            onChange={onChange}
+          />
+
           <div>
             <label className="inline-flex items-center">
               <input
@@ -117,7 +127,7 @@ function Register() {
           </button>
         </div>
         <p className="my-4 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
-         Đã có tài khoản?
+          Đã có tài khoản?
           <Link
             className="ml-1 block font-sans text-sm font-bold leading-normal underline  antialiased"
             to={routes.login}

@@ -12,6 +12,7 @@ const routes = {
   newArticle: "/articles/new",
   editArticle: "/articles/edit/:id",
   issueNumber: "/list-magazine",
+  detailActor: "/actor/:id",
   detailMagazine: "/magazine/:id",
 
   introMagazine: "/intro/magazine",

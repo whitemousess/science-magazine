@@ -61,10 +61,16 @@ function UserAdmin() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
+                Tài khoản
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Họ tên
               </th>
               <th scope="col" className="px-6 py-3">
                 Email
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Số điện thoại
               </th>
               <th scope="col" className="px-6 py-3">
                 Giới tính
@@ -86,9 +92,16 @@ function UserAdmin() {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
+                    {item.username}
+                  </th>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
                     {item.fullName}
                   </th>
                   <td className="px-6 py-4">{item.email}</td>
+                  <td className="px-6 py-4">{item.phone}</td>
                   <td className="px-6 py-4">
                     {item.gender === 0 ? "Nam" : "Nữ"}
                   </td>

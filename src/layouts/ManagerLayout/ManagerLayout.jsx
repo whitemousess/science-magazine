@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
+
 import SideBar from "../components/SideBar";
 import HeaderManager from "./HeaderManager";
-import { useContext } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
+
 function ManagerLayout({ children }) {
-  const {role} = useContext(AuthContext);
+  const { role } = useContext(AuthContext);
 
   if (role !== 0) {
     return null;
@@ -15,7 +17,7 @@ function ManagerLayout({ children }) {
       <HeaderManager />
       <div className="flex">
         <SideBar />
-        {children}
+        <div className=" w-5/6">{children}</div>
       </div>
     </div>
   );

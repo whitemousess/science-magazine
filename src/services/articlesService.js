@@ -24,6 +24,17 @@ export const getAllArticles = async ({ page, perPage, fullName }) => {
   }
 };
 
+export const getArticlesActor = async ({ page, perPage, fullName, id }) => {
+  try {
+    const res = await httpRequest.get(`article/get-article/actor/${id}`, {
+      params: { page, per_page: perPage, fullName },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getArticleMagazine = async ({ page, perPage, title, id }) => {
   try {
     const res = await httpRequest.get(`article/get-article-magazine/${id}`, {
@@ -55,24 +66,21 @@ export const getDetailArticles = async ({ id }) => {
 
 export const getTopArticle = async () => {
   try {
-    const res = await httpRequest.get(`article/top-article`)
+    const res = await httpRequest.get(`article/top-article`);
 
     return res.data;
   } catch (error) {
     return error;
   }
-}
+};
 
 export const getMyArticles = async ({ page, perPage }) => {
   try {
     const token = await localStorage.token;
-    const res = await httpRequest.get(
-      "article/get-my-articles",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { page, per_Page: perPage },
-      },
-    );
+    const res = await httpRequest.get("article/get-my-articles", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { page, per_Page: perPage },
+    });
     return res.data;
   } catch (error) {
     return error;

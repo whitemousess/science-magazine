@@ -42,7 +42,18 @@ export const Commons = {
       },
     ];
 
-    return { typeMagazine, publishingYear };
+    const academicDegree = [
+      {
+        title: "Thạc sĩ",
+        type: "ThS",
+      },
+      {
+        title: "Tiến sĩ",
+        type: "Ts",
+      },
+    ];
+
+    return { typeMagazine, publishingYear, academicDegree };
   },
 
   formatTime(time) {

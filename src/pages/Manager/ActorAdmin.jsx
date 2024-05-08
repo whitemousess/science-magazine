@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Commons } from "~/Common/Commons";
 import Loading from "~/components/Loading";
 import Paginate from "~/components/Paginate";
+import routes from "~/config/routes";
 
 import { deleteUser, getActor } from "~/services/userService";
 
 function ActorAdmin() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [search, setSearch] = useState("");
@@ -57,9 +59,12 @@ function ActorAdmin() {
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 whitespace-nowrap">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
+              <th scope="col" className="px-6 py-3">
+                tài khoản
+              </th>
               <th scope="col" className="px-6 py-3">
                 Họ tên
               </th>
@@ -67,7 +72,19 @@ function ActorAdmin() {
                 Email
               </th>
               <th scope="col" className="px-6 py-3">
+                Số điện thoại
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Địa chỉ
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Giới tính
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Tốt nghiệp
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Ngày sinh
               </th>
               <th scope="col" className="px-6 py-3">
                 Ngày tạo
@@ -86,23 +103,39 @@ function ActorAdmin() {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
-                    {item.fullName}
+                    {item.username}
+                  </th>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {item.academic_degree}.{item.fullName}
                   </th>
                   <td className="px-6 py-4">{item.email}</td>
+                  <td className="px-6 py-4">{item.phone}</td>
+                  <td className="px-6 py-4">{`${item.districts} - ${item.province}`}</td>
                   <td className="px-6 py-4">
                     {item.gender === 0 ? "Nam" : "Nữ"}
                   </td>
-
+                  <td className="px-6 py-4">{item.education}</td>
+                  <td className="px-6 py-4">{Commons.formatTime(item.dob)}</td>
                   <td className="px-6 py-4">
                     {Commons.formatTime(item.createdAt)}
                   </td>
                   <td className="py-4 px-4 text-right">
-                    <Link
-                      to={`/manager/user-edit/${item._id}`}
+                    <button
+                      onClick={() =>
+                        navigate(routes.newActor, {
+                          state: {
+                            status: "Edit",
+                            dataActor: item,
+                          },
+                        })
+                      }
                       className="font-medium text-blue-600 hover:underline px-2"
                     >
                       Sửa
-                    </Link>
+                    </button>
                     <button
                       onClick={() => deleteUserAdmin(item._id)}
                       className="font-medium text-red-600 hover:underline px-2"
