@@ -13,6 +13,7 @@ function EditUser() {
     email: "",
     gender: 0,
     imageUrl: "",
+    phone: "",
   });
   const [image, setImage] = useState("");
 
@@ -42,6 +43,7 @@ function EditUser() {
           email: user.data.email,
           gender: user.data.gender,
           imageUrl: user.data.imageUrl,
+          phone: user.data.phone,
         });
         setImage(user.data.imageUrl);
       })
@@ -73,7 +75,7 @@ function EditUser() {
             htmlFor="password"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Password
+            Mật khẩu
           </label>
         </div>
         <div className="relative z-0 w-full mb-5 ">
@@ -90,7 +92,7 @@ function EditUser() {
             htmlFor="rePassword"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Re password
+            Nhập lại mật khẩu
           </label>
         </div>
       </div>
@@ -109,7 +111,7 @@ function EditUser() {
           htmlFor="fullName"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Full name
+          Họ và tên
         </label>
       </div>
 
@@ -123,7 +125,7 @@ function EditUser() {
             value={0}
             onChange={onChange}
           />
-          <span className="ml-2">Male</span>
+          <span className="ml-2">Nam</span>
         </label>
         <label className="inline-flex items-center ml-4">
           <input
@@ -134,7 +136,7 @@ function EditUser() {
             checked={data.gender == 1}
             onChange={onChange}
           />
-          <span className="ml-2">Female</span>
+          <span className="ml-2">Nữ</span>
         </label>
       </div>
       <div className="relative z-0 w-full mb-5 ">
@@ -152,7 +154,26 @@ function EditUser() {
           htmlFor="email"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Email address
+          Địa chỉ email
+        </label>
+      </div>
+
+      <div className="relative z-0 w-full mb-5 ">
+        <input
+          type="number"
+          name="phone"
+          id="phone"
+          value={data.phone}
+          onChange={onChange}
+          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" "
+          required
+        />
+        <label
+          htmlFor="phone"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Số điện thoại
         </label>
       </div>
 
@@ -161,7 +182,7 @@ function EditUser() {
           className="mb-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
           htmlFor="file_input"
         >
-          Upload avatar
+          Tải ảnh đại diện
         </label>
       </div>
 

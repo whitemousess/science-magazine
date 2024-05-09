@@ -41,7 +41,7 @@ function IssueNumber() {
   useEffect(() => {
     getMagazinePublish({
       page: currentPage,
-      perPage: 10,
+      perPage: 6,
       title: search,
       type,
       publishingYear,
@@ -51,7 +51,7 @@ function IssueNumber() {
         setTotalPage(magazine.totalPages);
       })
       .catch((err) => console.error(err));
-  }, [search, type, publishingYear]);
+  }, [search,currentPage, type, publishingYear]);
 
   useEffect(() => {
     getMagazinePublish({
@@ -97,12 +97,11 @@ function IssueNumber() {
             {topArticle.length > 0 ? (
               topArticle.map((item) => (
                 <div className="m-4" key={item._id}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
                   <Link
                     to={`/articles/${item._id}`}
                     className="underline text-blue-900"
                   >
-                    {item.title}
+                    - {item.title}
                   </Link>
                 </div>
               ))

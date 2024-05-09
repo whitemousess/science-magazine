@@ -6,8 +6,8 @@ import { AuthContext } from "~/shared/AuthProvider";
 
 function AddActor() {
   const location = useLocation();
-  const { status, dataActor } = location?.state;
-  const { addActor ,editProfile} = useContext(AuthContext);
+  const { status, dataActor, isLoading } = location?.state;
+  const { addActor, editActor } = useContext(AuthContext);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -46,9 +46,9 @@ function AddActor() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(status === "Edit"){
-      editProfile(data)
-    }else{
+    if (status === "Edit") {
+      editActor(data);
+    } else {
       addActor(data);
     }
   };
@@ -386,7 +386,7 @@ function AddActor() {
           type="submit"
           className="bg-primary text-white hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
         >
-          Thay đổi
+          {status === "Edit" ? "Thay đổi" : "Thêm tác giả"}
         </button>
       </div>
 

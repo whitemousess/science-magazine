@@ -42,7 +42,7 @@ function Menu() {
           <Avatar
             src={currentUser.imageUrl}
             alt="avatar"
-            className="w-[50px] h-[50px] rounded-full p-2"
+            className="w-[50px] h-[50px] rounded-full p-2 object-cover"
           />
           <div className="absolute hidden group-hover:block w-[170px] right-0 border rounded-md bg-white z-10 select-none group">
             {MENU_STUDENT.map((data) => (

@@ -7,7 +7,10 @@ import ImageResize from "quill-image-resize-module-react";
 import TextInput from "~/components/TextInput";
 import { newArticles } from "~/services/articlesService";
 import { AuthContext } from "~/shared/AuthProvider";
-import { getMagazineUnpublished } from "~/services/magazineService";
+import {
+  getMagazineById,
+  getMagazineUnpublished,
+} from "~/services/magazineService";
 import EmptyClient from "~/components/EmptyClient";
 import { useNavigate } from "react-router-dom";
 
@@ -16,11 +19,17 @@ Quill.register("modules/imageResize", ImageResize);
 function NewArticle() {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [data, setData] = useState({ title: "", imageUrl: "" });
+  const [data, setData] = useState({
+    title: "",
+    imageUrl: "",
+    magazineId: "",
+    fileUrl: "",
+  });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectMagazine, setSelectMagazine] = useState([]);
+  const [magazineImage, setMagazineImage] = useState({});
 
   const addArticle = async () => {
     setIsLoading(true);
@@ -28,11 +37,11 @@ function NewArticle() {
     formData.append("title", data.title);
     formData.append("description", description);
     formData.append("imageUrl", data.imageUrl);
-    formData.append("magazineId", selectMagazine[0]?._id);
+    formData.append("magazineId", data.magazineId);
+    formData.append("fileUrl", data.fileUrl);
 
     await newArticles({ data: formData })
       .then((a) => {
-        console.log(a);
         alert("Thêm mới thành công");
         setIsLoading(false);
         navigate(-1);
@@ -82,6 +91,34 @@ function NewArticle() {
     }
   };
 
+  const onChangeMagazine = (e) => {
+    const newData = { ...data };
+    newData[e.target.name] = e.target.value;
+    setData(newData);
+    getMagazineById({ id: e.target.value })
+      .then((magazine) => {
+        setMagazineImage(magazine.data.imageUrl);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onChangeFile = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const img = URL.createObjectURL(file);
+      setImage(img);
+      const newData = { ...data };
+      newData.imageUrl = file;
+      setData(newData);
+    } else if (file && file.type.startsWith("application/")) {
+      const newData = { ...data };
+      newData.fileUrl = file;
+      setData(newData);
+    }
+  };
+
   useEffect(() => {
     getMagazineUnpublished({})
       .then((magazine) => {
@@ -95,6 +132,7 @@ function NewArticle() {
   if (!token) {
     return;
   }
+
   return (
     <div className="px-10 w-full">
       {selectMagazine.length > 0 ? (
@@ -102,12 +140,7 @@ function NewArticle() {
           <div className="flex justify-center items-center">
             <div className="flex flex-col justify-center items-center">
               <p className="mt-4 text-center">Số xuất bản tiếp theo</p>
-              <img
-                src={selectMagazine[0]?.imageUrl}
-                alt=""
-                className="w-56 my-4"
-              />
-              <p>{selectMagazine[0]?.title}</p>
+              <img src={magazineImage} alt="" className="w-56 my-4" />
             </div>
             {showImage && (
               <img
@@ -117,10 +150,24 @@ function NewArticle() {
               />
             )}
           </div>
+          <select
+            name="magazineId"
+            className="p-2 mb-4 w-full border rounded-lg"
+            required
+            value={data.magazineId}
+            onChange={onChangeMagazine}
+          >
+            <option value="">Chọn trang tạp chí</option>
+            {selectMagazine.map((item) => (
+              <option value={item._id} key={item._id}>
+                {item.title}
+              </option>
+            ))}
+          </select>
 
           <TextInput
             type="text"
-            title={"title"}
+            title={"Tiêu đề"}
             value={data.title}
             name={"title"}
             onChange={onChange}
@@ -133,6 +180,24 @@ function NewArticle() {
             >
               Tải ảnh
             </label>
+
+            <div className="flex flex-col mb-4">
+              <label
+                className="mb-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
+                htmlFor="file_pdf"
+              >
+                Chọn file thông tin ( pdf )
+              </label>
+              <input
+                required
+                type="file"
+                className="opacity-0 h-0"
+                onChange={onChangeFile}
+                accept=".pdf"
+                id="file_pdf"
+                name="fileUrl"
+              />
+            </div>
 
             <ReactQuill
               theme="snow"

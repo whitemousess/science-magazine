@@ -103,9 +103,14 @@ function EditArticle() {
           className="rounded-lg w-[300px] h-auto mb-2"
         />
       )}
+
+      <a href={data.fileUrl} target="_blank">
+        <button className="py-2 px-10 rounded-lg bg-green-500 text-white border hover:border-green-700 my-4">Pdf</button>
+      </a>
+
       <TextInput
         type="text"
-        title={"title"}
+        title={"Tiêu đề"}
         value={data.title}
         name={"title"}
         onChange={onChange}

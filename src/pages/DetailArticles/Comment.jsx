@@ -126,7 +126,7 @@ function Comment() {
             <Avatar
               src={item.userId.imageUrl}
               alt="avatar"
-              className="w-[40px] h-[40px] mr-2 rounded-full"
+              className="w-[40px] h-[40px] mr-2 rounded-full object-cover"
             />
 
             <div className="py-1 px-4 rounded-xl border bg-slate-100">

@@ -49,14 +49,23 @@ function Item({ data, liked, removeLiked }) {
       </div>
 
       <div className="flex items-center justify-between px-10">
-        <div className="flex items-center py-5">
+        <div className="flex items-center  py-5">
           <Avatar
             src={data?.userId?.imageUrl}
             alt="avatar"
-            className="w-[42px] h-[42px] rounded-full"
+            className="w-[42px] h-[42px] rounded-full object-cover"
           />
-          <p className="ml-2 font-medium">{data?.userId?.fullName || "Trường Đại học Tài nguyên và Môi trường Hà Nội "}</p>
+          <p className="ml-2 font-medium">
+            {data?.userId?.fullName ||
+              "Trường Đại học Tài nguyên và Môi trường Hà Nội "}
+          </p>
         </div>
+
+        <a href={data.fileUrl} target="_blank">
+          <button className="py-2 px-10 rounded-lg bg-green-500 text-white border hover:border-green-700 my-4">
+            Pdf
+          </button>
+        </a>
       </div>
       <div className="ql-editor xl:px-[340px] sm:px-[100px] px-10">
         <div

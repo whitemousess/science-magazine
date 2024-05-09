@@ -48,6 +48,7 @@ function AddMagazine() {
       await magazineService
         .editMagazine({ data: formData, id: location?.state?.dataMagazine._id })
         .then((result) => {
+          alert("Đã thay đổi")
           navigate(routes.magazineAdmin);
           setLoading(false);
         })
@@ -56,6 +57,7 @@ function AddMagazine() {
       await magazineService
         .addMagazine({ data: formData })
         .then((result) => {
+          alert("Thêm thành công")
           navigate(routes.magazineAdmin);
           setLoading(false);
         })
@@ -68,7 +70,7 @@ function AddMagazine() {
       setData(location?.state?.dataMagazine);
       setImage(location?.state?.dataMagazine.imageUrl);
     }
-  }, [status, location?.state?.dataMagazine]);
+  }, [location?.state?.dataMagazine]);
 
   return (
     <div className="w-full mt-4 flex flex-col items-center">
@@ -77,7 +79,7 @@ function AddMagazine() {
       <form onSubmit={onSubmit} className="w-3/4 ">
         <TextInput
           type="text"
-          title={"title"}
+          title={"Tiêu đề"}
           value={data.title}
           name={"title"}
           onChange={onChange}

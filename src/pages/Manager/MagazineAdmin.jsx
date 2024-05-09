@@ -88,6 +88,9 @@ function MagazineAdmin() {
                 Ngày xuất bản
               </th>
               <th scope="col" className="px-6 py-3">
+                Số phiên bản
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Thời gian đăng
               </th>
               <th scope="col" className="px-6 py-3">
@@ -114,6 +117,11 @@ function MagazineAdmin() {
                   <td className="px-6 py-4">
                     {item.status
                       ? Commons.formatTime(item.publishingYear)
+                      : "Chưa xuất bản"}
+                  </td>
+                  <td className="px-6 py-4">
+                    {item.versionPublish
+                      ? `Số phiên bản ${item.versionPublish}`
                       : "Chưa xuất bản"}
                   </td>
                   <td className="px-6 py-4">

@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   const addActor = async (data) => {
     if (data.password !== data.rePassword) alert("Mật khẩu không trùng khớp");
     const formData = new FormData();
-    
+    setIsLoading(true);
     formData.append("username", data.username);
     formData.append("password", data.password);
     formData.append("fullName", data.fullName);
@@ -84,15 +84,18 @@ export const AuthProvider = ({ children }) => {
           navigate(routes.actorAdmin);
         } else if (res.response.data.error.keyPattern.email) {
           alert("Email đã tồn tại");
-        }else if (res.response.data.error.keyPattern.username) {
+        } else if (res.response.data.error.keyPattern.username) {
           alert("Tài khoản đã tồn tại");
         }
       })
       .catch((err) => console.log(err));
+
+    setIsLoading(false);
   };
 
-  const editProfile = async (data) => {
+  const editActor = async (data) => {
     if (data.password !== data.rePassword) alert("Mật khẩu không trùng khớp");
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("password", data.password);
     formData.append("fullName", data.fullName);
@@ -123,6 +126,35 @@ export const AuthProvider = ({ children }) => {
         }
       })
       .catch((err) => console.log(err));
+    setIsLoading(false);
+  };
+
+  const editProfile = async (data) => {
+    if (data.password !== data.rePassword) alert("Mật khẩu không trùng khớp");
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("password", data.password);
+    formData.append("fullName", data.fullName);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("gender", data.gender);
+    {
+      data.imageUrl && formData.append("imageUrl", data.imageUrl);
+    }
+
+    await userService
+      .editUser({ id: data.id, data: formData })
+      .then((res) => {
+        if (res.data) {
+          alert("Thay đổi thành công");
+          setCurrentUser(res.data);
+          navigate(-1);
+        } else if (res.response.data.error.keyPattern.email) {
+          alert("Email đã tồn tại");
+        }
+      })
+      .catch((err) => console.log(err));
+    setIsLoading(false);
   };
 
   const logOut = () => {
@@ -182,6 +214,7 @@ export const AuthProvider = ({ children }) => {
         register,
         editProfile,
         addActor,
+        editActor,
       }}
     >
       {children}

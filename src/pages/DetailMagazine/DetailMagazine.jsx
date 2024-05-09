@@ -91,7 +91,7 @@ function DetailMagazine() {
               key={item._id}
               className="flex bg-white rounded-xl overflow-hidden  mb-4"
             >
-              <img src={item.imageUrl} alt={item.title} className="h-40" />
+              <img src={item.imageUrl} alt={item.title} className="w-40 h-auto" />
               <div className="m-4 relative w-full">
                 <p className="">{item.title}</p>
                 <p className="">{item.userId.fullName}</p>

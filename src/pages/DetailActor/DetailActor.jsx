@@ -46,7 +46,7 @@ function DetailActor() {
             <Avatar
               src={data.imageUrl}
               alt="avatar"
-              className="w-[200px] h-[200px] rounded-full"
+              className="w-[200px] h-[200px] rounded-full object-cover"
             />
           </div>
           <div className="w-2/3">
@@ -103,7 +103,7 @@ function DetailActor() {
           </div>
 
           {dataArticles && dataArticles.length > 0 ? (
-            <div className=" w-[1022px]">
+            <div className="w-8/12 bg-gray-100 p-4 rounded-xl shadow-black/15 shadow-inner">
               <p className="py-10 text-2xl text-center font-bold">
                 Bài viết đã đăng
               </p>
@@ -111,9 +111,9 @@ function DetailActor() {
                 <Link
                   to={`/articles/${item._id}`}
                   key={item._id}
-                  className="flex bg-white rounded-xl"
+                  className="flex bg-white rounded-xl my-5"
                 >
-                  <img src={item.imageUrl} alt={item.title} className="h-40" />
+                  <img src={item.imageUrl} alt={item.title} className="w-40 h-auto" />
                   <div className="m-4 relative w-full">
                     <p className="">{item.title}</p>
                     <p className="">{item.userId.fullName}</p>
