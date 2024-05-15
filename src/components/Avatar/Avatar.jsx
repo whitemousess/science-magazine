@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import HUNRELOGO from "~/assets/HUNRE_Logo.png";
+import Logo from "~/assets/Logo.png";
 
 function Avatar({ src, className }) {
   return (
@@ -7,7 +7,7 @@ function Avatar({ src, className }) {
       {src ? (
         <img src={src} alt="avatar" className={className} />
       ) : (
-        <img src={HUNRELOGO} alt="a" className={className} />
+        <img src={Logo} alt="a" className={className} />
       )}
     </>
   );

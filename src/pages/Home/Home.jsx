@@ -19,7 +19,7 @@ function Home() {
           <img
             src={Logo}
             alt=""
-            className="w-[500px] h-auto"
+            className="w-[200px] h-auto"
             style={{ filter: "drop-shadow(15px 15px 5px rgba(0,0,0,.6)" }}
           />
         </div>

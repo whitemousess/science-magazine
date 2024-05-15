@@ -5,7 +5,7 @@ import { useContext, useEffect } from "react";
 import Footer from "~/layouts/components/Footer";
 import Header from "~/layouts/components/Header";
 import { AuthContext } from "~/shared/AuthProvider";
-import HUNRE_LOGO from "~/assets/HUNRE_Logo.png";
+import Logo from "~/assets/Logo.png";
 import { useNavigate } from "react-router-dom";
 import routes from "~/config/routes";
 
@@ -24,7 +24,7 @@ function DefaultLayout({ children }) {
       channel.bind("listen-notification", (message) => {
         const notification = new Notification("Thông báo mới!", {
           body: "Có tạp chí mới được nhà trường xuất bản.",
-          icon: HUNRE_LOGO,
+          icon: Logo,
         });
         notification.onclick = function (event) {
           event.preventDefault(); // Prevents the browser from focusing the Notification's related tab
