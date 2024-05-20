@@ -25,49 +25,19 @@ function IntroMagazine() {
         </p>
         <p className="my-2 ">Các lĩnh vực cụ thể:</p>
         <p className="my-2 italic">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: Khoa học tự nhiên;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: Khoa công nghệ thông tin;
         </p>
         <p className="my-2 italic">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 : Khoa học kỹ thuật và công nghệ;{" "}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 : Khoa môi trường;{" "}
         </p>
         <p className="my-2 italic">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 : Khoa học y dược;{" "}
-        </p>
-        <p className="my-2 italic">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 : Khoa học nông nghiệp;{" "}
-        </p>
-        <p className="my-2 italic">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 : Khoa học xã hội và nhân văn.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 : Khoa kế toán;{" "}
         </p>
         <p className="my-2 ">
           Tần suất xuất bản: Mỗi tháng xuất bản 01 số Tạp chí Khoa học và Công
           nghệ Việt Nam bản B với 12-15 bài báo khoa học (80 trang từ năm 2024),
           thuộc một hoặc một vài lĩnh vực khoa học gần nhau.
         </p>
-        <h3 className="mt-4 my-2">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tạp chí Khoa học và Công nghệ Việt Nam
-          bản B, P-ISSN 1859-4794, E-ISSN 2615-9929:
-        </h3>
-
-        <p className="my-2 italic">
-          - Được xuất bản hàng tháng bằng tiếng Việt; có tiêu đề, tóm tắt và từ
-          khóa bằng tiếng Anh; được phản biện kín bởi ít nhất 2 phản biện độc
-          lập; gắn DOI khi xuất bản;
-        </p>
-
-        <p className="my-2 italic">
-          - Xuất bản công trình nghiên cứu trong 05 lĩnh vực: khoa học tự nhiên,
-          kỹ thuật và công nghệ, khoa học y - dược, khoa học nông nghiệp, khoa
-          học xã hội và nhân văn;
-        </p>
-
-        <p className="my-2 italic">
-          - Tuân theo các tiêu chuẩn quốc tế của một tạp chí khoa học bao gồm:
-          định dạng theo chuẩn quốc tế, ban biên tập chuyên ngành, phản biện
-          kín, kiểm tra đạo văn, hiệu đính ngôn ngữ tiếng Anh (với tên bài, tóm
-          tắt và từ khóa bằng tiếng Anh), gắn số DOI khi xuất bản.
-        </p>
-
         <h3 className="mt-4 my-2">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Đối tượng phục vụ
         </h3>
@@ -81,6 +51,15 @@ function IntroMagazine() {
           Đối tượng này tìm kiếm thông tin phong phú và đa dạng về quản lý tài
           nguyên, môi trường và phát triển bền vững, cũng như các công nghệ kỹ
           thuật môi trường, và các lĩnh vực kinh tế - xã hội liên quan.
+        </p>
+
+        <p className="my-4 italic">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tạp chí Khoa học là nơi hội tụ
+          những nhà khoa học hàng đầu trong nước và quốc tế, những người luôn
+          tâm huyết trong việc chia sẻ kiến thức và đam mê của mình. Chúng tôi
+          luôn cố gắng để mỗi bài viết trên website đều là một tác phẩm khoa học
+          giá trị, góp phần thúc đẩy sự phát triển của khoa học và công nghệ
+          trong nước.
         </p>
       </div>
     </div>

@@ -9,10 +9,21 @@ function Home() {
     <div className="flex flex-col">
       <div className="py-10 md:px-32 px-10 md:flex items-center w-full border-b bg-gradient-to-br to-primary from-green-100">
         <div className="md:w-1/2">
-          <strong>Khám phá những điều kỳ diệu của khoa học</strong>
+          <strong>&nbsp;Chào mừng đến với Tạp chí Khoa học!</strong>
           <p>
-            Đi sâu vào những khám phá và đổi mới mới nhất trong thế giới khoa
-            học.
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tạp chí Khoa học rất vinh dự
+            được đồng hành cùng quý vị trên hành trình khám phá tri thức khoa
+            học bao la và đầy thú vị. Với sứ mệnh lan tỏa thông tin khoa học uy
+            tín, chính xác và dễ hiểu, chúng tôi cam kết mang đến cho quý vị
+            những bài viết chất lượng cao về mọi lĩnh vực khoa học, từ vật lý,
+            hóa học, sinh học đến y học, công nghệ và khoa học xã hội.
+          </p>
+          <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ngoài ra, Tạp chí Khoa học còn
+            là diễn đàn mở để quý độc giả có thể chia sẻ ý kiến, thảo luận và
+            tranh luận về các vấn đề khoa học. Chúng tôi luôn mong muốn nhận
+            được những đóng góp của quý vị để Tạp chí Khoa học ngày càng hoàn
+            thiện và phát triển hơn nữa.
           </p>
         </div>
         <div className="md:w-1/2 flex justify-center">
