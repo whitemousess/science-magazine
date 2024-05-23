@@ -14,7 +14,7 @@ function IntroContact() {
             <h2 className="text-xl font-semibold mb-4">Địa chỉ</h2>
             <p className="text-gray-700 mb-4">Hà Đông - Hà Nội - Viêt Nam</p>
             <h2 className="text-xl font-semibold mb-4">Số điện thoại</h2>
-            <p className="text-gray-700 mb-4"> <a href="tel:03287094111">03287094111</a></p>
+            <p className="text-gray-700 mb-4"> <a href="tel:0328709485">0328709485</a></p>
             <h2 className="text-xl font-semibold mb-4">Email</h2>
             <p className="text-gray-700 mb-4"><a href="mailto:thangcoiofficial@gmail.com">thangcoiofficial@gmail.com</a></p>
             <h2 className="text-xl font-semibold mb-4">Giờ làm việc</h2>

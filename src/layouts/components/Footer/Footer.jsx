@@ -34,7 +34,7 @@ function Footer() {
         </div>
         <div className="flex flex-col mx-28">
           Thông tin liên hệ:
-          <a href="tel:032870948111">03287094111</a>
+          <a href="tel:032870948111">0328709485</a>
           <a href="mailto:thangcoiofficial@gmail.com">
             thangcoiofficial@gmail.com
           </a>

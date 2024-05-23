@@ -30,8 +30,8 @@ function IntroCopyRight() {
                 thangcoiofficial@gmail.com
               </a>{" "}
               hoặc{" "}
-              <a href="tel:032870948111">
-                032870948111
+              <a href="tel:0328709485">
+                0328709485
               </a>
               .
             </p>
