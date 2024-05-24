@@ -16,8 +16,8 @@ function DefaultLayout({ children }) {
   useEffect(() => {
     if (token && role !== 0) {
       Notification.requestPermission();
-      const pusher = new Pusher(import.meta.env.VITE_KEY_PUSHER, {
-        cluster: import.meta.env.VITE_CLUSTER_PUSHER,
+      const pusher = new Pusher(process.env.REACT_APP_KEY_PUSHER, {
+        cluster: process.env.REACT_APP_CLUSTER_PUSHER,
       });
       const channel = pusher.subscribe("notification");
 

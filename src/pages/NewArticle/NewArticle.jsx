@@ -106,13 +106,7 @@ function NewArticle() {
 
   const onChangeFile = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const img = URL.createObjectURL(file);
-      setImage(img);
-      const newData = { ...data };
-      newData.imageUrl = file;
-      setData(newData);
-    } else if (file && file.type.startsWith("application/")) {
+    if (file && file.type.startsWith("application/")) {
       const newData = { ...data };
       newData.fileUrl = file;
       setData(newData);

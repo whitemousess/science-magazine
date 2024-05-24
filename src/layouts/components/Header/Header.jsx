@@ -10,6 +10,7 @@ import QRApp from "~/assets/QRApp.png";
 import { FaAppStoreIos, FaGooglePlay } from "react-icons/fa";
 
 function Header() {
+  const location = useLocation();
   const { token, role } = useContext(AuthContext);
   const navigate = useNavigate();
   const driveLink =

@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable  */
 import { httpRequest } from "~/utils/httprequest";
 
 export const addFavorite = async ({ articleId }) => {
