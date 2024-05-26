@@ -40,6 +40,10 @@ function Header() {
           title: "Bản quyền",
           link: routes.introCopyright,
         },
+        {
+          title: "Ứng dụng di động",
+          link: routes.introApp,
+        },
       ],
     },
   ];

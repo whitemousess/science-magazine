@@ -18,6 +18,7 @@ const routes = {
   introMagazine: "/intro/magazine",
   introContact: "/intro/contact",
   introCopyright: "/intro/Copyright",
+  introApp: "/intro/App",
 
   login: "/login",
   register: "/register",

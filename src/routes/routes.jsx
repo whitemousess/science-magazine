@@ -26,6 +26,7 @@ import { IntroContact, IntroCopyright, IntroMagazine } from "~/pages/Intro";
 import IssueNumber from "~/pages/IssueNumber";
 import DetailMagazine from "~/pages/DetailMagazine";
 import DetailActor from "~/pages/DetailActor";
+import IntroApp from "~/pages/Intro/IntroApp";
 
 const publicRoutes = [
   { path: config.routes.notfound, component: NotFound },
@@ -40,6 +41,7 @@ const publicRoutes = [
   { path: config.routes.introMagazine, component: IntroMagazine },
   { path: config.routes.introContact, component: IntroContact },
   { path: config.routes.introCopyright, component: IntroCopyright },
+  { path: config.routes.introApp, component: IntroApp },
   { path: config.routes.issueNumber, component: IssueNumber },
   { path: config.routes.detailMagazine, component: DetailMagazine },
   { path: config.routes.detailActor, component: DetailActor },
