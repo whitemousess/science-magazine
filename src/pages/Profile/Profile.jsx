@@ -15,7 +15,9 @@ function Profile() {
   useEffect(() => {
     if (toggle === 1) {
       getCurrentUser()
-        .then((currentUser) => setHistory(currentUser.data.magazine_view))
+        .then((currentUser) =>
+          setHistory(currentUser.data.magazine_view.reverse())
+        )
         .catch((error) => console.log(error));
     }
   }, [toggle]);
@@ -87,8 +89,8 @@ function Profile() {
             <div className="w-8/12 bg-gray-100 p-4 rounded-xl shadow-black/15 shadow-inner">
               {history.map((item) => (
                 <Link
-                  to={`/articles/${item?.magazineId?._id}`}
-                  key={item?.magazineId?._id}
+                  to={`/magazine/${item.magazineId._id}`}
+                  key={item._id}
                   className="flex bg-white rounded-xl my-5"
                 >
                   <img
@@ -98,8 +100,7 @@ function Profile() {
                   />
                   <div className="m-4 relative w-full">
                     <p className="">{item?.magazineId?.title}</p>
-                    <p className="">{item?.magazineId?.userId?.fullName}</p>
-                    <p className="absolute bottom-0 right-0">
+                    <p>
                       {` Ngày ${Commons.formatTimeDay(
                         item?.magazineId?.createdAt
                       )} tháng ${Commons.formatTimeMonth(
@@ -108,6 +109,11 @@ function Profile() {
                         item?.magazineId?.createdAt
                       )}`}
                     </p>
+                    <p>Bản phát hành số : {item?.magazineId.versionPublish}</p>
+                    <div className="w-full flex justify-between absolute bottom-0">
+                      <p>Được xuất bản bởi trường đại học ...</p>
+                      <p>Xem ngày: {Commons.formatTime(item.monthYear)}</p>
+                    </div>
                   </div>
                 </Link>
               ))}
