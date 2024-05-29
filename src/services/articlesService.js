@@ -12,10 +12,10 @@ export const newArticles = async ({ data }) => {
   }
 };
 
-export const getAllArticles = async ({ page, perPage, title }) => {
+export const getAllArticles = async ({ page, perPage, userName }) => {
   try {
     const res = await httpRequest.get("article/get-all", {
-      params: { page, per_page: perPage, title },
+      params: { page, per_page: perPage, userName },
     });
     return res.data;
   } catch (error) {
