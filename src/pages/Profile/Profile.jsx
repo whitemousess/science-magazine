@@ -6,23 +6,40 @@ import { AuthContext } from "~/shared/AuthProvider";
 import Avatar from "~/components/Avatar";
 import { Commons } from "~/Common/Commons";
 import { getCurrentUser } from "~/services/userService";
+import { getArticlesActor } from "~/services/articlesService";
+import { CiDatabase } from "react-icons/ci";
+import Paginate from "~/components/Paginate";
 
 function Profile() {
-  const { currentUser, token } = useContext(AuthContext);
+  const { currentUser, token, role } = useContext(AuthContext);
   const [toggle, setToggle] = useState(0);
   const [history, setHistory] = useState([]);
+  const [dataArticles, setDataArticles] = useState();
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (toggle === 1) {
+    if (toggle === 0 && role === 2) {
+      getArticlesActor({ id: currentUser._id, page: currentPage, perPage: 10 })
+        .then((articles) => {
+          setDataArticles(articles.data);
+          setTotalPage(articles.totalPage);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (toggle === 1) {
       getCurrentUser()
         .then((currentUser) =>
           setHistory(currentUser.data.magazine_view.reverse())
         )
         .catch((error) => console.log(error));
     }
-  }, [toggle]);
+  }, [toggle, currentUser, currentPage]);
 
-  document.title = "Trang cá nhân";
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected + 1);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full py-10">
@@ -84,6 +101,78 @@ function Profile() {
                   {currentUser.gender === 0 ? "Nam" : "Nữ"}
                 </div>
               </div>
+
+              {role === 2 && (
+                <>
+                  <div className="border border-blue-200 rounded-[5px] overflow-hidden mb-2">
+                    <div className="bg-blue-200 px-4 py-2">
+                      Tốt nghiệp tại trường
+                    </div>
+                    <div className="px-4 py-2">{currentUser.education}</div>
+                  </div>
+
+                  <div className="border border-blue-200 rounded-[5px] overflow-hidden mb-2">
+                    <div className="bg-blue-200 px-4 py-2">Địa chỉ</div>
+                    <div className="px-4 py-2">
+                      {currentUser.districts} - {currentUser.province}
+                    </div>
+                  </div>
+
+                  <div className="border border-blue-200 rounded-[5px] overflow-hidden mb-2">
+                    <div className="bg-blue-200 px-4 py-2">Số điện thoại</div>
+                    <div className="px-4 py-2">{currentUser.phone || 0}</div>
+                  </div>
+
+                  <div className="border border-blue-200 rounded-[5px] mb-2">
+                    <div className="bg-blue-200 px-4 py-2">Mô tả</div>
+                    <div className="px-4 py-2 break-words">
+                      {currentUser.biography}
+                    </div>
+                  </div>
+                  {dataArticles && dataArticles.length > 0 ? (
+                    <div className="w-full bg-gray-100 p-4 rounded-xl shadow-black/15 shadow-inner">
+                      <p className="py-10 text-2xl text-center font-bold">
+                        Bài viết đã đăng
+                      </p>
+                      {dataArticles.map((item) => (
+                        <Link
+                          to={`/articles/${item._id}`}
+                          key={item._id}
+                          className="flex bg-white rounded-xl my-5"
+                        >
+                          <img
+                            src={item.imageUrl}
+                            alt={item.title}
+                            className="w-40 h-auto"
+                          />
+                          <div className="m-4 relative w-full">
+                            <p className="">{item.title}</p>
+                            <p className="">{item.userId.fullName}</p>
+                            <p className="absolute bottom-0 right-0">
+                              {` Ngày ${Commons.formatTimeDay(
+                                item.createdAt
+                              )} tháng ${Commons.formatTimeMonth(
+                                item.createdAt
+                              )} năm ${Commons.formatTimeYear(item.createdAt)}`}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col justify-center items-center h-full">
+                      <CiDatabase size={100} />
+                      <p className="">Chưa có bài báo nào?</p>
+                    </div>
+                  )}
+
+                  <Paginate
+                    totalPage={totalPage}
+                    handlePageChange={handlePageChange}
+                    currentPage={currentPage}
+                  />
+                </>
+              )}
             </div>
           ) : (
             <div className="w-8/12 bg-gray-100 p-4 rounded-xl shadow-black/15 shadow-inner">

@@ -12,10 +12,10 @@ export const newArticles = async ({ data }) => {
   }
 };
 
-export const getAllArticles = async ({ page, perPage, fullName }) => {
+export const getAllArticles = async ({ page, perPage, title }) => {
   try {
     const res = await httpRequest.get("article/get-all", {
-      params: { page, per_page: perPage, fullName },
+      params: { page, per_page: perPage, title },
     });
     return res.data;
   } catch (error) {
@@ -23,10 +23,10 @@ export const getAllArticles = async ({ page, perPage, fullName }) => {
   }
 };
 
-export const getArticlesActor = async ({ page, perPage, fullName, id }) => {
+export const getArticlesActor = async ({ page, perPage, id }) => {
   try {
     const res = await httpRequest.get(`article/get-article/actor/${id}`, {
-      params: { page, per_page: perPage, fullName },
+      params: { page, per_page: perPage },
     });
     return res.data;
   } catch (error) {

@@ -36,7 +36,7 @@ function ArticlesAdmin() {
   };
 
   const fetchData = useCallback(() => {
-    getAllArticles({ page: currentPage, perPage: 10, fullName: search })
+    getAllArticles({ page: currentPage, perPage: 10, title: search })
       .then((articles) => {
         setData(articles.data);
         setTotalPage(articles.totalPage);
