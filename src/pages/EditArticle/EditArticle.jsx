@@ -18,6 +18,7 @@ function EditArticle() {
   const [data, setData] = useState({ title: "", imageUrl: "" });
   const [description, setDescription] = useState("");
   const [showImage, setShowImage] = useState("");
+  const [showImageMagazine, setShowImageMagazine] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const addArticle = async () => {
@@ -84,6 +85,7 @@ function EditArticle() {
         setData(article);
         setDescription(article.descriptionId.description);
         setShowImage(article.imageUrl);
+        setShowImageMagazine(article.magazineId.imageUrl);
       })
       .catch((error) => {
         console.log(error);
@@ -96,13 +98,20 @@ function EditArticle() {
 
   return (
     <div className="px-10">
-      {showImage && (
-        <img
-          src={showImage}
-          alt=""
-          className="rounded-lg w-[300px] h-auto mb-2"
-        />
-      )}
+     
+          <div className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
+              <p className="mt-4 text-center">Số tạp chí</p>
+              <img src={showImageMagazine} alt="" className="w-56 my-4" />
+            </div>
+            {showImage && (
+              <img
+                src={showImage}
+                alt=""
+                className="rounded-lg  w-auto h-56 m-4"
+              />
+            )}
+          </div>
 
       <a href={data.fileUrl} target="_blank">
         <button className="py-2 px-10 rounded-lg bg-green-500 text-white border hover:border-green-700 my-4">Pdf</button>
