@@ -51,7 +51,13 @@ export const AuthProvider = ({ children }) => {
           alert("Email đã tồn tại");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.data.error.keyPattern.email) {
+          alert("Email đã tồn tại");
+        } else if (err.response.data.error.keyPattern.username) {
+          alert("Tài khoản đã tồn tại");
+        }
+      });
   };
 
   const addActor = async (data) => {
@@ -88,7 +94,13 @@ export const AuthProvider = ({ children }) => {
           alert("Tài khoản đã tồn tại");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.data.error.keyPattern.email) {
+          alert("Email đã tồn tại");
+        } else if (err.response.data.error.keyPattern.username) {
+          alert("Tài khoản đã tồn tại");
+        }
+      });
 
     setIsLoading(false);
   };
@@ -199,9 +211,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [location, navigate, role]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <AuthContext.Provider
       value={{

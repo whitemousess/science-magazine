@@ -46,6 +46,8 @@ function ArticlesAdmin() {
       });
   }, [currentPage, search]);
 
+  console.log(search);
+
   const onSubmit = ({ id }) => {
     editArticles({ id, data: { status: 1 } })
       .then((articles) => {
