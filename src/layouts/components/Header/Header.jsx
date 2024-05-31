@@ -14,7 +14,7 @@ function Header() {
   const { token, role } = useContext(AuthContext);
   const navigate = useNavigate();
   const driveLink =
-    "https://drive.google.com/file/d/1Am_xpqDH4hdpyCKWlLiFiBvePy6ikO-t/view?usp=drive_link";
+    "https://drive.google.com/file/d/17-Fv5gWaRxCAQpedvhGvbRoJIa56ckVe/view?usp=drive_link";
 
   const MENU_HEADER = [
     {
@@ -53,7 +53,7 @@ function Header() {
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     if (isAndroid || isIOS) {
-      window.location.href = `https://drive.google.com/file/d/1Am_xpqDH4hdpyCKWlLiFiBvePy6ikO-t/view?usp=drive_link`;
+      window.location.href = driveLink;
     } else {
       window.open(driveLink, "_blank");
     }
