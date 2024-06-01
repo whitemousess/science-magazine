@@ -202,9 +202,11 @@ function Profile() {
                       <p>
                         Bản phát hành số : {item?.magazineId.versionPublish}
                       </p>
-                      <div className="w-full flex justify-between absolute bottom-0">
-                        <p>Được xuất bản bởi trường đại học ...</p>
-                        <p>Xem ngày: {Commons.formatTime(item.monthYear)}</p>
+                      <div className="min-h-[30px]">
+                        <div className="w-full flex justify-between absolute bottom-0">
+                          <p>Được xuất bản bởi trường đại học ...</p>
+                          <p>Xem ngày: {Commons.formatTime(item.monthYear)}</p>
+                        </div>
                       </div>
                     </div>
                   </Link>
