@@ -176,36 +176,45 @@ function Profile() {
             </div>
           ) : (
             <div className="w-8/12 bg-gray-100 p-4 rounded-xl shadow-black/15 shadow-inner">
-              {history.map((item) => (
-                <Link
-                  to={`/magazine/${item.magazineId._id}`}
-                  key={item._id}
-                  className="flex bg-white rounded-xl my-5"
-                >
-                  <img
-                    src={item?.magazineId?.imageUrl}
-                    alt={item?.magazineId?.title}
-                    className="w-40 h-auto"
-                  />
-                  <div className="m-4 relative w-full">
-                    <p className="">{item?.magazineId?.title}</p>
-                    <p>
-                      {` Ngày ${Commons.formatTimeDay(
-                        item?.magazineId?.createdAt
-                      )} tháng ${Commons.formatTimeMonth(
-                        item?.magazineId?.createdAt
-                      )} năm ${Commons.formatTimeYear(
-                        item?.magazineId?.createdAt
-                      )}`}
-                    </p>
-                    <p>Bản phát hành số : {item?.magazineId.versionPublish}</p>
-                    <div className="w-full flex justify-between absolute bottom-0">
-                      <p>Được xuất bản bởi trường đại học ...</p>
-                      <p>Xem ngày: {Commons.formatTime(item.monthYear)}</p>
+              {history.length > 0 ? (
+                history.map((item) => (
+                  <Link
+                    to={`/magazine/${item.magazineId._id}`}
+                    key={item._id}
+                    className="flex bg-white rounded-xl my-5"
+                  >
+                    <img
+                      src={item?.magazineId?.imageUrl}
+                      alt={item?.magazineId?.title}
+                      className="w-40 h-auto"
+                    />
+                    <div className="m-4 relative w-full">
+                      <p className="">{item?.magazineId?.title}</p>
+                      <p>
+                        {` Ngày ${Commons.formatTimeDay(
+                          item?.magazineId?.createdAt
+                        )} tháng ${Commons.formatTimeMonth(
+                          item?.magazineId?.createdAt
+                        )} năm ${Commons.formatTimeYear(
+                          item?.magazineId?.createdAt
+                        )}`}
+                      </p>
+                      <p>
+                        Bản phát hành số : {item?.magazineId.versionPublish}
+                      </p>
+                      <div className="w-full flex justify-between absolute bottom-0">
+                        <p>Được xuất bản bởi trường đại học ...</p>
+                        <p>Xem ngày: {Commons.formatTime(item.monthYear)}</p>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))
+              ) : (
+                <div className="flex flex-col justify-center items-center h-full">
+                  <CiDatabase size={100} />
+                  <p className="">Chưa có bài báo nào?</p>
+                </div>
+              )}
             </div>
           )}
         </>
